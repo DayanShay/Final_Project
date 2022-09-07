@@ -1,2 +1,3 @@
 project
 .pytest_cache
+.idea
