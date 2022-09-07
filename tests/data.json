@@ -1,0 +1,6 @@
+{
+  "url": "http://automationpractice.com/index.php",
+  "browse": "Chrome",
+  "path_driver": "C:\\Users\\shaye\\Downloads\\chromedriver_win32\\chromedriver.exe",
+  "sys_use": "playwright"
+}
