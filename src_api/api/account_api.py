@@ -1,28 +1,30 @@
 from src_api.api.base_api import BaseApi
 from src_api.api import base_api_functions as API_Func
+from src_api.models.api_user_dto import ApiUserDto
 from src_api.models.auth_response_dto import AuthResponseDto
+from src_api.models.problem_details import ProblemDetails
 
 
 class Account_Api(BaseApi):
     def __init__(self, url: str, headers):
         super().__init__(url, headers)
 
-    @API_Func.post(url="api/Account/register")
+    @API_Func.make_a_req(url="api/Account/register", action="post")
     def post_account(self,response):
         if response.ok:
-            return response.json()
-        return API_Func.res_dict(response.status_code,response.text)
+            return response.text
+        return response.text
 
-    @API_Func.post(url="api/Account/login")
+    @API_Func.make_a_req(url="api/Account/login", action="post")
     def login_account(self,response):
         if response.ok:
             return AuthResponseDto(**response.json())
-        return API_Func.res_dict(response.status_code,response.text)
+        return response.json()
 
-    @API_Func.post(url="api/Account/refreshtoken")
+    @API_Func.make_a_req(url="api/Account/refreshtoken", action="post")
     def refresh_token(self,response):
         if response.ok:
             return AuthResponseDto(**response.json())
-        return API_Func.res_dict(response.status_code,response.text)
+        return response.json()
 
 

@@ -24,7 +24,7 @@ class Selenium(Driver):
         self._driver.find_element(*self.identy(location)).click()
 
     def send_keys_to(self, location, text):
-        self._driver.find_element(*self._With[location]).send_keys(text)
+        self._driver.find_element(*self.identy(location)).send_keys(text)
 
     def identy(self,location):
         if location[0] == "ID":

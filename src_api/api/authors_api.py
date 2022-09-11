@@ -10,7 +10,7 @@ class Authors_Api(BaseApi):
     def __init__(self, url: str, headers):
         super().__init__(url, headers)
 
-    @API_Func.get(url="api/Authors")
+    @API_Func.make_a_req(url="api/Authors",action= "get")
     def get_authors(self, response):
         if response.ok:
             authors = []
@@ -19,20 +19,24 @@ class Authors_Api(BaseApi):
             return authors
         return API_Func.res_dict(response.status_code, response.text)
 
-    @API_Func.post(url="api/Authors")
+    @API_Func.make_a_req(url="api/Authors", action="post")
     def post_authors(self,response):
         if response.ok:
             return Author(**response.json())
         return API_Func.res_dict(response.status_code,response.text)
 
-    @API_Func.get(url=f"api/Authors")
+    @API_Func.make_a_req(url=f"api/Authors/",action="get",param="id")
     def get_authors_by_id(self, response):
         if response.ok:
-            authdto = []
-            for authdtos in response.json():
-                authdto.append(AuthorDto(**authdtos))
-            return authdto
+            return AuthorDto(**response.json())
         return API_Func.res_dict(response.status_code, response.text)
+
+
+    @API_Func.make_a_req(url=f"api/Authors/",action="delete",param="id")
+    def delete_authors_by_id(self, response):
+        if response.ok:
+            return response.text
+        return response.json
 
 
 

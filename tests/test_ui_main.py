@@ -15,18 +15,18 @@ URL = "http://localhost:7017/"
 
 
 USER ={
-  "email": "user@example.com",
+  "email": "t2e2222t@exemple.co.il",
   "password": "string",
   "firstName": "string",
   "lastName": "string"
 }
 
 USER_Login = {
-    "email": "user@example.com",
-    "password": "string"
+    "email": USER["email"],
+    "password": USER["password"]
 }
 
-AuthorDto = {
+Create_Author_Dto_test = {
   "name": "string",
   "homeLatitude": 0,
   "homeLongitude": 0
@@ -40,7 +40,6 @@ def get_account_api():
 def get_authors_api(bearer_auth_session):
     return Authors_Api(URL,bearer_auth_session)
 
-
 @pytest.fixture(scope="session")
 def make_api_user_dto():
     return ApiUserDto(**USER)
@@ -51,7 +50,7 @@ def make_login_dto(make_api_user_dto):
 
 @pytest.fixture(scope="session")
 def create_authors_dto(make_api_user_dto):
-    return CreateAuthorDto(**AuthorDto)
+    return CreateAuthorDto(**Create_Author_Dto_test)
 
 @pytest.fixture(scope="session")
 def bearer_auth_session(login_account_token):
@@ -69,6 +68,12 @@ def login_account_token(get_account_api,make_login_dto):
     LOGGER.info(f"{res}")
     return res
 
+@pytest.fixture(scope="session")
+def get_authors_by_id(get_authors_api,id="1"):
+    api = get_authors_api
+    res = api.get_authors_by_id(data=id)
+    LOGGER.info(f"{res}")
+
 def test_post_account(get_account_api,make_api_user_dto):
     User = make_api_user_dto
     api = get_account_api
@@ -84,8 +89,7 @@ def test_refresh_token(get_account_api,login_account_token):
     User_Login = login_account_token
     api = get_account_api
     res = api.refresh_token(data=User_Login.to_json())
-    # LOGGER.info(f"Moshe 2 {res} , Moshe 1 {User_Login}")
-    # assert res == User_Login
+    LOGGER.info(f"Moshe 2 {res} , Moshe 1 {User_Login}")
 
 def test_get_authors(get_authors_api):
     api = get_authors_api
@@ -95,10 +99,40 @@ def test_get_authors(get_authors_api):
 def test_post_authors(get_authors_api,create_authors_dto):
     authors_dto = create_authors_dto
     api = get_authors_api
-    res = api.post_authors(data=authors_dto.to_json())
+    for i in range(1,100):
+        res = api.post_authors(data=authors_dto.to_json())
     LOGGER.info(f"{res}")
 
 def test_get_authors_by_id(get_authors_api,id="1"):
     api = get_authors_api
-    res = api.get_authors_by_id(data=id)
+    res = api.get_authors_by_id(id=id)
     LOGGER.info(f"{res}")
+
+
+
+
+def post_cap_authors(get_authors_api,create_authors_dto):
+    authors_dto = create_authors_dto
+    api = get_authors_api
+    for i in range(1,6777):
+        res = api.post_authors(data=authors_dto.to_json())
+    # LOGGER.info(f"{res}")
+
+def delete_all_authors_created(get_authors_api):
+    api = get_authors_api
+    a = api.get_authors()
+    for i in a:
+        if i.id > 3:
+            t = api.delete_authors_by_id(id=str(i.id))
+            # LOGGER.info(f"{t}")
+
+def test_add_and_delete_10000(get_authors_api,create_authors_dto):
+    post_cap_authors(get_authors_api,create_authors_dto)
+    delete_all_authors_created(get_authors_api)
+
+
+def test_delete_authors_by_id(get_authors_api):
+    api = get_authors_api
+    a = api.get_authors()
+    t = api.delete_authors_by_id(id=str(4))
+    LOGGER.info(f"{t}")

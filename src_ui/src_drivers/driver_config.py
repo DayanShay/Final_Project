@@ -35,5 +35,3 @@ class Meted:
     NAME = "NAME"
     TAG_NAME = "TAG_NAME"
     TEXT = "TEXT"
-
-
