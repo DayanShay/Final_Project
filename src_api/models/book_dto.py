@@ -12,7 +12,6 @@ class BookDto(Base_Obj):
     amountInStock: int
     imageUrl: str
     authorId: int
-    author: Author
 
     def __post_init__(self):
         pass

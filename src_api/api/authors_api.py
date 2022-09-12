@@ -4,6 +4,7 @@ from src_api.models.auth_response_dto import AuthResponseDto
 from src_api.models.author import Author
 from src_api.models.author_dto import AuthorDto
 from src_api.models.get_author_dto import GetAuthorDto
+from src_api.models.update_author_dto import UpdateAuthorDto
 
 
 class Authors_Api(BaseApi):
@@ -31,12 +32,27 @@ class Authors_Api(BaseApi):
             return AuthorDto(**response.json())
         return API_Func.res_dict(response.status_code, response.text)
 
+    @API_Func.make_a_req(url=f"api/Authors/",action="put",param="id")
+    def put_authors_by_id(self, response):
+        if response.ok:
+            return UpdateAuthorDto(**response.json())
+        return API_Func.res_dict(response.status_code, response.text)
 
     @API_Func.make_a_req(url=f"api/Authors/",action="delete",param="id")
     def delete_authors_by_id(self, response):
         if response.ok:
             return response.text
-        return response.json
+        return response.text
+
+
+    @API_Func.make_a_req(url=f"api/Authors/search/",action="get",param='text')
+    def search_authors_by_text(self, response):
+        if response.ok:
+            authors = []
+            for author in response.json():
+                authors.append(GetAuthorDto(**author))
+            return authors
+        return response.text
 
 
 

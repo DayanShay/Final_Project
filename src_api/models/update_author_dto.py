@@ -3,13 +3,11 @@ from src_api.models.base_obj import Base_Obj
 
 
 @dataclass
-class CreateBookDto(Base_Obj):
+class UpdateAuthorDto(Base_Obj):
     name: str
-    price: float
-    amountInStock: int
-    imageUrl: str
-    authorId: int
-    description: str = True
+    homeLatitude: float
+    homeLongitude: float
+    id: int
 
     def __post_init__(self):
         pass

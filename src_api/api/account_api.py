@@ -19,7 +19,7 @@ class Account_Api(BaseApi):
     def login_account(self,response):
         if response.ok:
             return AuthResponseDto(**response.json())
-        return response.json()
+        return response.text
 
     @API_Func.make_a_req(url="api/Account/refreshtoken", action="post")
     def refresh_token(self,response):

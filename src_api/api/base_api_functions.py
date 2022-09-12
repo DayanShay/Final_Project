@@ -11,11 +11,10 @@ def make_a_req(url=None, param=None, action=None):
     def formator(func, **kwargs):
         def convertor(self, *args, **kwargs):
             data = kwargs['data'] if 'data' in kwargs else None
-            json = kwargs['json'] if 'json' in kwargs else None
             param_ = kwargs[param] if param else ""
             url_ = self._base_url + url if url else self._base_url
             req_action = self.select_session_req(action)
-            response = req_action(url=url_ + param_, data=json, json=data)
+            response = req_action(url=url_ + f"{param_}", json=data)
             return func(self, response=response)
         return convertor
     return formator
