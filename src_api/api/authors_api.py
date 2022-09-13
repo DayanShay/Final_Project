@@ -35,7 +35,7 @@ class Authors_Api(BaseApi):
     @API_Func.make_a_req(url=f"api/Authors/",action="put",param="id")
     def put_authors_by_id(self, response):
         if response.ok:
-            return UpdateAuthorDto(**response.json())
+            return None
         return API_Func.res_dict(response.status_code, response.text)
 
     @API_Func.make_a_req(url=f"api/Authors/",action="delete",param="id")

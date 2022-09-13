@@ -1,8 +1,9 @@
+import time
 import pytest
 import logging
 import json
 from playwright.sync_api import sync_playwright
-from src_ui.src_pages.main_page import Main_Page
+from src_ui.src_pages.login_page import LogIn
 from src_ui.src_drivers.driver_selenium import Selenium
 from src_ui.src_drivers.driver_playwright import PlayWright
 from src_ui.src_drivers.driver_config import Driver
@@ -44,11 +45,13 @@ def make_driver(args_from_user) -> Driver:
 
 @pytest.fixture
 def get_to_main_page(make_driver):
-    main_page = Main_Page(make_driver)
-    return main_page
+    login_page = LogIn(make_driver)
+    return login_page
 
 
 def test_open_page_and_click_log_in(get_to_main_page):
     page = get_to_main_page
-    page.click_log_in()
+    page.make_login(email="admin@sela.co.il",password="1234")
+    time.sleep(5)
+
 

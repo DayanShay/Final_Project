@@ -27,13 +27,14 @@ class Selenium(Driver):
         self._driver.find_element(*self.identy(location)).send_keys(text)
 
     def identy(self,location):
-        if location[0] == "ID":
-            return (By.ID, location[1])
-        elif location[0] == "NAME":
-            return (By.NAME, location[1])
-        elif location[0] == "TAG_NAME":
-            return (By.TAG_NAME, location[1])
-        elif location[0] == "TEXT":
-            return (By.LINK_TEXT, location[1])
+        actions = {"ID":By.ID,
+                   "NAME":By.NAME,
+                   "TAG_NAME":By.TAG_NAME,
+                   "PARTIAL_LINK_TEXT":By.PARTIAL_LINK_TEXT,
+                   "CLASS_NAME":By.CLASS_NAME,
+                   "CSS_SELECTOR":By.CSS_SELECTOR,
+                   "XPATH":By.XPATH,
+                   }
+        return actions[location[0]],location[1]
 
 

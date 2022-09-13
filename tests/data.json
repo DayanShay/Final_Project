@@ -1,5 +1,5 @@
 {
-  "url": "localhost",
+  "url": "http://127.0.0.1/",
   "browse": "Chrome",
   "path_driver": "C:\\Users\\shaye\\Downloads\\chromedriver_win32\\chromedriver.exe",
   "sys_use": "selenium"

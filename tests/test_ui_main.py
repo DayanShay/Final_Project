@@ -36,7 +36,7 @@ Create_Author_Dto_test = {
   "homeLongitude": 34.82631068248099
 }
 Update_Author_Dto_test = {
-  "name": "string",
+  "name": "Moshe",
   "homeLatitude": 0,
   "homeLongitude": 0,
   "id": 1
@@ -148,11 +148,13 @@ def test_get_authors_by_id(get_authors_api,id="202"):
 def test_put_authors_by_id(get_authors_api,update_authors_dto):
     authors_dto1 = update_authors_dto
     api = get_authors_api
-    authors_dto1.name = "yossi"
     authors_dto2 = api.post_authors(data=authors_dto1.to_json())
+    assert authors_dto2.name == authors_dto1.name
+    authors_dto2.name = "yossi"
     res = api.put_authors_by_id(data=authors_dto2.to_json(),id=authors_dto2.id)
-    assert authors_dto1 != authors_dto2
-    LOGGER.info(f"{res}")
+    res_get = api.get_authors_by_id(id=authors_dto2.id)
+    assert res_get.name == authors_dto2.name
+    LOGGER.info(f"{res_get}")
 
 
 
@@ -163,7 +165,7 @@ def post_cap_authors(get_authors_api,create_authors_dto):
         res = api.post_authors(data=authors_dto.to_json())
     # LOGGER.info(f"{res}")
 
-def delete_all_authors_created(get_authors_api):
+def test_delete_all_authors_created(get_authors_api):
     api = get_authors_api
     a = api.get_authors()
     for i in a:
