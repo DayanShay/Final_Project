@@ -1,6 +1,7 @@
 import time
 import pytest
 import logging
+from selenium import webdriver
 import json
 from playwright.sync_api import sync_playwright
 from src_ui.src_pages.login_page import LogIn
@@ -54,4 +55,16 @@ def test_open_page_and_click_log_in(get_to_main_page):
     page.make_login(email="admin@sela.co.il",password="1234")
     time.sleep(5)
 
+@pytest.fixture
+def driver_remote():
+    from selenium import webdriver
 
+    firefox_options = webdriver.FirefoxOptions()
+    chrome_options = webdriver.ChromeOptions()
+    driver = webdriver.Remote(
+        command_executor='http://127.0.0.1:4444/wd/hub',
+        options= chrome_options
+    )
+    driver.get("http://www.google.com")
+    time.sleep(10)
+    driver.quit()
