@@ -8,7 +8,6 @@ from selenium.webdriver.common.by import By
 class Selenium(Driver):
     def __init__(self, driver:Driver):
         super().__init__(driver)
-        self._driver = driver
 
     def get_element(self, location: tuple[[], str],driver: [] = None, wait: int = 5):
         if driver is None:
@@ -26,6 +25,7 @@ class Selenium(Driver):
         if driver is None:
             driver = self._driver
         button = WebDriverWait(driver, wait).until(EC.element_to_be_clickable(self.identy(location)))
+        self._driver.switch_to
         button.click()
 
 
@@ -47,5 +47,11 @@ class Selenium(Driver):
     def alerts_hendler(self,wait = 15):
         allert = WebDriverWait(self._driver, wait).until(EC.alert_is_present())
         print(allert.text)
+        allert.accept()
+        allert2 = WebDriverWait(self._driver, wait).until(EC.alert_is_present())
+        if allert2:
+            print(allert2.text)
+            allert.accept()
+
 
 

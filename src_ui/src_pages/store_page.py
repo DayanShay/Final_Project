@@ -13,8 +13,7 @@ class StorePage(Base_Page):
                   "buy": (Meted.TAG_NAME, "button")}
 
     def get_card_group(self):
-        card_group = self._driver.get_element(self._locations["card_group"])
-        books = self._driver.get_elements(self._locations["book-container"],card_group)
+        books = self._driver.get_elements(self._locations["book-container"])
         return books
 
     # def get_book_title(self,book):
@@ -29,13 +28,8 @@ class StorePage(Base_Page):
 
     def click_buy(self, book):
         buy_button = self._driver.get_element(self._locations["buy"], book)
-        flag = True
-        i = 0
-        while flag or i == 3:
-            try:
-                buy_button.click()
-            except:
-                buy_button.click()
-                i+=1
-                flag = False
+        try:
+            buy_button.click()
+        except:
+            buy_button.click()
         self._driver.alerts_hendler()

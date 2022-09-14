@@ -32,7 +32,7 @@ def make_driver(args_from_user) -> Driver:
             elif browser == "Firefox":
                 driver = webdriver.Firefox(path_driver)
             driver.get(url)
-            driver.maximize_window()
+            driver.set_window_size(800,800)
             yield Selenium(driver)
             driver.quit()
         elif sys_use == "playwright":
@@ -62,7 +62,8 @@ def test_open_page_and_click_log_in(get_to_main_page):
     page.make_login(email="admin@sela.co.il", password="1234")
     store_page = page.click_store_page_button()
     books = store_page.get_card_group()
-    store_page.click_buy(books[0])
+    for book in books:
+        store_page.click_buy(book)
 
 
 def driver_remote(browser):
