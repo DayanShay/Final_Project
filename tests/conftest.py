@@ -21,5 +21,6 @@ def pytest_addoption(parser):
     parser.addoption("--browse",action="store",default=data_for_test["browse"])
     parser.addoption("--path_driver",action="store",default=data_for_test["path_driver"])
     parser.addoption("--sys_use",action="store",default=data_for_test["sys_use"])
+    parser.addoption("--remote",action="store",default=data_for_test["remote"])
 
 
