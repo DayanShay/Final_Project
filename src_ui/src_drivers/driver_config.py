@@ -1,13 +1,11 @@
 from abc import ABC, abstractmethod
-from selenium import webdriver
-
 
 class Driver(ABC):
     """
     abstractmethod for creating driver
     """
 
-    def __init__(self, driver:webdriver):
+    def __init__(self, driver):
         self._driver = driver
 
     @abstractmethod

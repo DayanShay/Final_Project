@@ -31,8 +31,8 @@ def make_driver(args_from_user) -> Driver:
                 driver = webdriver.Chrome(path_driver)
             elif browser == "Firefox":
                 driver = webdriver.Firefox(path_driver)
+            driver.maximize_window()
             driver.get(url)
-            driver.set_window_size(800,800)
             yield Selenium(driver)
             driver.quit()
         elif sys_use == "playwright":
@@ -59,11 +59,51 @@ def get_to_main_page(make_driver):
 
 def test_open_page_and_click_log_in(get_to_main_page):
     page = get_to_main_page
-    page.make_login(email="admin@sela.co.il", password="1234")
-    store_page = page.click_store_page_button()
-    books = store_page.get_card_group()
-    for book in books:
-        store_page.click_buy(book)
+    store_page = page.make_login(email="admin@sela.co.il", password="1234")
+    time.sleep(3)
+    authors_page = store_page.click_authors_button()
+    authors_temp = authors_page.get_author_container()
+    for i in range(len(authors_temp)):
+        authors = authors_page.get_author_container()
+        author_page = authors_page.click_go_to_author_page(authors[i])
+        books_temp = author_page.get_book_container()
+        for book in range(len(books_temp)):
+            books = author_page.get_book_container()
+            author_name = author_page.get_book_author_name(books[book])
+            ammount_in_stock_of_book = author_page.get_ammount_in_stock_of_book(books[book])
+            book_price = author_page.get_book_price(books[book])
+            home_location = author_page.get_home_location()
+            book_details = author_page.get_book_details(books[book])
+            print(author_name,ammount_in_stock_of_book,book_price,book_details,home_location)
+        authors_page = author_page.click_authors_button()
+
+
+        # ammount = store_page.get_ammount_in_stock_of_book(book)
+        #     if int(ammount) > 0:
+        #         store_page.click_buy(books[i])
+        time.sleep(3)
+
+
+
+
+    #click on all autors found in page(first time log in to autors page)
+    # authors_page = store_page.click_authors_button()
+    # authors_temp = authors_page.get_author_container()
+    # for i in range(len(authors_temp)):
+    #     authors = authors_page.get_author_container()
+    #     author_name = authors_page.get_author_name(authors[i])
+    #     print(author_name)
+    #     authors_page.click_go_to_author_page(authors[i])
+    #     time.sleep(3)
+    #     authors_page = authors_page.click_authors_button()
+
+
+    # click on purcuse for each book once
+    # books = store_page.get_book_container()
+    # for i,book in enumerate(books):
+    #     ammount = store_page.get_ammount_in_stock_of_book(book)
+    #     if int(ammount) > 0:
+    #         store_page.click_buy(books[i])
 
 
 def driver_remote(browser):

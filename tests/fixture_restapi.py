@@ -44,7 +44,7 @@ Create_Book_Dto_test = {
     "name": "string",
     "description": "string",
     "price": 0,
-    "amountInStock": 3,
+    "amountInStock": 2,
     "imageUrl": "string",
     "authorId": 1
 }

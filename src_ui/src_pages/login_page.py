@@ -2,7 +2,6 @@ from src_ui.src_drivers.driver_config import Meted
 from src_ui.src_pages.base_page import Base_Page
 
 
-
 class LoginPage(Base_Page):
     def __init__(self, driver):
         super().__init__(driver)
@@ -38,7 +37,8 @@ class LoginPage(Base_Page):
         self._driver.send_keys_to(self.locations["Password_box"],text=text)
 
     def make_login(self,email,password):
-        self.click_log_in()
+        from src_ui.src_pages.store_page import StorePage
         self.fill_email(email)
         self.fill_password(password)
         self.click_submit()
+        return StorePage(self._driver)

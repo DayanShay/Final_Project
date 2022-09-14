@@ -30,7 +30,7 @@ def test_get_authors(get_authors_api):
 def test_post_authors(get_authors_api,create_authors_dto):
     authors_dto = create_authors_dto
     api = get_authors_api
-    for i in range(1,2):
+    for i in range(1,200):
         res = api.post_authors(data=authors_dto)
     LOGGER.info(f"{res}")
 
@@ -98,7 +98,8 @@ def test_post_books(get_books_api,get_authors_api,get_create_book_dto):
     book = get_create_book_dto
     res_get_authors = authors_api.get_authors()
     book.authorId = res_get_authors[0].id
-    res_post_books = books_api.post_books(data=book)
+    for i in range(1,3):
+        res_post_books = books_api.post_books(data=book)
     print(res_post_books)
 
 def test_delete_books_by_id(get_books_api):
