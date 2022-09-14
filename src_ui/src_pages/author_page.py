@@ -10,7 +10,8 @@ class AuthorPage(Base_Page):
                   "book_name": (Meted.CLASS_NAME, "card-title"),
                   "book_details": (Meted.CLASS_NAME, "card-text"),
                   "author_name": (Meted.CLASS_NAME, "list-group"),
-                  "home_location":(Meted.XPATH,'//*[@id="mapDiv"]/div/div/div[4]/div/div/div/div/div[1]/div[1]')
+                  "google_map":(Meted.XPATH,'//*[@id="mapDiv"]/div/div/div[4]/div/div/div/div'),
+                  "google_frame":(Meted.ID,'iframeId')
                   }
 
     def get_book_container(self):
@@ -42,8 +43,12 @@ class AuthorPage(Base_Page):
         return card_footer
 
     def get_home_location(self):
-        home_location = self._driver.get_element(self._locations["home_location"]).split(" ")
+        google_frame = self._driver.get_element(self._locations["google_frame"])
+        self._driver.get_frame(google_frame)
+        google_map_text = self._driver.get_element(self._locations["google_map"]).text.split("\n")
+        home_location = google_map_text[0].split(" ")
         homeLatitude = home_location[0]
         homeLongitude = home_location[1]
+        self._driver.switch_to_default()
         return homeLatitude,homeLongitude
 
