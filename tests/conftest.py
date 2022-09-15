@@ -1,5 +1,7 @@
 import json
 
+from tests.fixture_restapi import *
+
 def get_data_for_test() -> json:
     """
     preparing data for the tests from json file.

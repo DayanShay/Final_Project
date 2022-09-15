@@ -57,7 +57,7 @@ def get_to_main_page(make_driver):
     return login_page
 
 
-def test_open_page_and_click_log_in(get_to_main_page):
+def test_open_page_and_click_log_in(get_to_main_page,get_authors_api):
     page = get_to_main_page
     store_page = page.make_login(email="admin@sela.co.il", password="1234")
     time.sleep(3)
@@ -66,15 +66,12 @@ def test_open_page_and_click_log_in(get_to_main_page):
     for i in range(len(authors_temp)):
         authors = authors_page.get_author_container()
         author_page = authors_page.click_go_to_author_page(authors[i])
-        books_temp = author_page.get_book_container()
-        for book in range(len(books_temp)):
-            books = author_page.get_book_container()
-            author_name = author_page.get_book_author_name(books[book])
-            ammount_in_stock_of_book = author_page.get_ammount_in_stock_of_book(books[book])
-            book_price = author_page.get_book_price(books[book])
-            home_location = author_page.get_home_location()
-            book_details = author_page.get_book_details(books[book])
-            print(author_name,ammount_in_stock_of_book,book_price,book_details,home_location)
+        home_location = author_page.get_home_location()
+        la, lo = author_page.convert_to_float_number(*home_location)
+        api_autor = get_authors_api.get_authors_by_id(id=(i+1))
+        LOGGER.info(f"{la},{lo}")
+        assert la == api_autor.homeLatitude
+        assert lo == api_autor.homeLongitude
         authors_page = author_page.click_authors_button()
 
 

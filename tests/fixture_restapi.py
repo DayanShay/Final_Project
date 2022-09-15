@@ -106,5 +106,6 @@ def bearer_auth_session(login_to_account_with_token):
 @pytest.fixture(scope="session")
 def get_authors_by_id(get_authors_api,id="1"):
     api = get_authors_api
-    res = api.get_authors_by_id(data=id)
+    res = api.get_authors_by_id(id=id)
     LOGGER.info(f"{res}")
+    return res

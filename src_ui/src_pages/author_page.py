@@ -5,13 +5,14 @@ from src_ui.src_drivers.driver_config import Meted, Driver
 class AuthorPage(Base_Page):
     def __init__(self, driver: Driver):
         super().__init__(driver)
+
     _locations = {"book-container": (Meted.CLASS_NAME, "book-container"),
                   "card_footer": (Meted.CLASS_NAME, "card-footer"),
                   "book_name": (Meted.CLASS_NAME, "card-title"),
                   "book_details": (Meted.CLASS_NAME, "card-text"),
                   "author_name": (Meted.CLASS_NAME, "list-group"),
-                  "google_map":(Meted.XPATH,'//*[@id="mapDiv"]/div/div/div[4]/div/div/div/div'),
-                  "google_frame":(Meted.ID,'iframeId')
+                  "google_map": (Meted.XPATH, '//*[@id="mapDiv"]/div/div/div[4]/div/div/div/div'),
+                  "google_frame": (Meted.ID, 'iframeId')
                   }
 
     def get_book_container(self):
@@ -26,15 +27,15 @@ class AuthorPage(Base_Page):
         ammount_in_stock = self.get_card_footer(book).split(" ")[5]
         return ammount_in_stock
 
-    def get_book_name(self,book):
+    def get_book_name(self, book):
         book_name = self._driver.get_element(self._locations["book_name"], book).text
         return book_name
 
-    def get_book_details(self,book):
+    def get_book_details(self, book):
         book_details = self._driver.get_element(self._locations["book_details"], book).text
         return book_details
 
-    def get_book_author_name(self,book):
+    def get_book_author_name(self, book):
         book_author_name = self._driver.get_element(self._locations["author_name"], book).text[4::1]
         return book_author_name
 
@@ -50,5 +51,15 @@ class AuthorPage(Base_Page):
         homeLatitude = home_location[0]
         homeLongitude = home_location[1]
         self._driver.switch_to_default()
-        return homeLatitude,homeLongitude
+        return homeLatitude, homeLongitude
 
+    def convert_to_float_number(self, homeLatitude, homeLongitude):
+        latitude = homeLatitude.replace("'","-").replace("°","-").replace('"',"")
+        longitude = homeLongitude.replace("'","-").replace("°","-").replace('"',"")
+        N = 'N' in latitude
+        d, m, s = map(float, latitude[:-1].split('-'))
+        latitude1 = (d + m / 60. + s / 3600.) * (1 if N else -1)
+        W = 'W' in longitude
+        d, m, s = map(float, longitude[:-1].split('-'))
+        longitude1 = (d + m / 60. + s / 3600.) * (-1 if W else 1)
+        return round(latitude1+0.0000001,5) , round(longitude1+0.000005,5)
