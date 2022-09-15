@@ -68,8 +68,10 @@ class Selenium(Driver):
                     flag = True
             i += 1
 
-    def send_keys_to(self, location: tuple[[], str], text: str):
-        self._driver.find_element(*self.identy(location)).send_keys(text)
+    def send_keys_to(self, location: tuple[[], str], driver: [] = None, text: str = None):
+        if driver is None:
+            driver = self._driver
+        driver.find_element(*self.identy(location)).send_keys(text)
 
     def identy(self, location):
         actions = {"ID": By.ID,

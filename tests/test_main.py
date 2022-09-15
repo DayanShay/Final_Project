@@ -57,28 +57,41 @@ def get_to_main_page(make_driver):
     return login_page
 
 
-def test_open_page_and_click_log_in(get_to_main_page,get_authors_api):
+def test_open_page_and_click_log_in(get_to_main_page):
     page = get_to_main_page
     store_page = page.make_login(email="admin@sela.co.il", password="1234")
+    search_page = store_page.search("")
+    books = search_page.get_book_container()
+    for book in books:
+        book_price = search_page.get_book_price(book)
+        book_details = search_page.get_book_details(book)
+        book_name = search_page.get_book_name(book)
+        ammount_in_stock = search_page.get_ammount_in_stock_of_book(book)
+        book_author_name = search_page.get_book_author_name(book)
+        print (book_price,book_details,book_name,ammount_in_stock,book_author_name)
+    authors = search_page.get_author_container()
+    for author in authors:
+        author_name = search_page.get_author_name(author)
+        print(author_name)
     time.sleep(3)
-    authors_page = store_page.click_authors_button()
-    authors_temp = authors_page.get_author_container()
-    for i in range(len(authors_temp)):
-        authors = authors_page.get_author_container()
-        author_page = authors_page.click_go_to_author_page(authors[i])
-        home_location = author_page.get_home_location()
-        la, lo = author_page.convert_to_float_number(*home_location)
-        api_autor = get_authors_api.get_authors_by_id(id=(i+1))
-        LOGGER.info(f"{la},{lo}")
-        assert la == api_autor.homeLatitude
-        assert lo == api_autor.homeLongitude
-        authors_page = author_page.click_authors_button()
 
 
-        # ammount = store_page.get_ammount_in_stock_of_book(book)
-        #     if int(ammount) > 0:
-        #         store_page.click_buy(books[i])
-        time.sleep(3)
+
+
+    #test all locations in maps
+    # authors_page = store_page.click_authors_button()
+    # authors_temp = authors_page.get_author_container()
+    # for i in range(len(authors_temp)):
+    #     authors = authors_page.get_author_container()
+    #     author_page = authors_page.click_go_to_author_page(authors[i])
+    #     home_location = author_page.get_home_location()
+    #     la, lo = author_page.convert_to_float_number(*home_location)
+    #     api_autor = get_authors_api.get_authors_by_id(id=(i+1))
+    #     LOGGER.info(f"{la},{lo}")
+    #     assert la == api_autor.homeLatitude
+    #     assert lo == api_autor.homeLongitude
+    #     authors_page = author_page.click_authors_button()
+
 
 
 
