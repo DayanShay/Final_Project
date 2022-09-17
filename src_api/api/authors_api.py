@@ -8,10 +8,10 @@ from src_api.models.update_author_dto import UpdateAuthorDto
 
 
 class Authors_Api(BaseApi):
-    def __init__(self, url: str, headers):
-        super().__init__(url, headers)
+    def __init__(self, url: str, headers,session):
+        super().__init__(url, headers,session)
 
-    @API_Func.make_a_req(url="api/Authors",action= "get")
+    @BaseApi.make_a_req(url="api/Authors",action= "get")
     def get_authors(self, response):
         if response.ok:
             authors = []
@@ -20,32 +20,32 @@ class Authors_Api(BaseApi):
             return authors
         return API_Func.res_dict(response.status_code, response.text)
 
-    @API_Func.make_a_req(url="api/Authors", action="post")
+    @BaseApi.make_a_req(url="api/Authors", action="post")
     def post_authors(self,response):
         if response.ok:
             return Author(**response.json())
-        return API_Func.res_dict(response.status_code,response.text)
+        return response.reason
 
-    @API_Func.make_a_req(url=f"api/Authors/",action="get",param="id")
+    @BaseApi.make_a_req(url=f"api/Authors/",action="get",param="id")
     def get_authors_by_id(self, response):
         if response.ok:
             return AuthorDto(**response.json())
         return API_Func.res_dict(response.status_code, response.text)
 
-    @API_Func.make_a_req(url=f"api/Authors/",action="put",param="id")
+    @BaseApi.make_a_req(url=f"api/Authors/",action="put",param="id")
     def put_authors_by_id(self, response):
         if response.ok:
             return None
         return API_Func.res_dict(response.status_code, response.text)
 
-    @API_Func.make_a_req(url=f"api/Authors/",action="delete",param="id")
+    @BaseApi.make_a_req(url=f"api/Authors/",action="delete",param="id")
     def delete_authors_by_id(self, response):
         if response.ok:
-            return response.text
-        return response.text
+            return response.reason
+        return response.reason
 
 
-    @API_Func.make_a_req(url=f"api/Authors/search/",action="get",param='text')
+    @BaseApi.make_a_req(url=f"api/Authors/search/",action="get",param='text')
     def search_authors_by_text(self, response):
         if response.ok:
             authors = []

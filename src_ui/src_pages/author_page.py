@@ -62,4 +62,4 @@ class AuthorPage(Base_Page):
         W = 'W' in longitude
         d, m, s = map(float, longitude[:-1].split('-'))
         longitude1 = (d + m / 60. + s / 3600.) * (-1 if W else 1)
-        return round(latitude1+0.0000001,5) , round(longitude1+0.000005,5)
+        return round(latitude1+0.0000001,4) , round(longitude1+0.000005,4)

@@ -64,7 +64,7 @@ class Selenium(Driver):
                 try:
                     button.click()
                     flag = False
-                except:
+                except ElementClickInterceptedException:
                     flag = True
             i += 1
 
