@@ -4,10 +4,10 @@ from tests.fixture_data import *
 from tests.fixture_restapi import *
 
 
-def test_delete_book_by_id_and_website_check():
+# def test_delete_book_by_id_and_website_check():
 
-def test_delete_book_unauthorize(get_api,get_authirized):
-    api = get_api
+def test_delete_book_unauthorize(get_api_valid,get_authirized):
+    api = get_api_valid
 
     res = api.authors.delete_authors_by_id(id=800)
     print(f"moshe1 {api.session.headers,api.session.auth}")
@@ -26,7 +26,7 @@ def test_post_account(get_api_valid,make_api_user_dto):
     User = make_api_user_dto
     User.email = Admin_email
     # User.password = ""
-    api = get_api_valid.Account
+    api = get_api_valid.account
     res = api.post_account(data=User)
     LOGGER.info(f"{res}")
 
@@ -43,26 +43,26 @@ def test_login_account(make_log_in_admin):
 #     assert res.refreshToken != User_Login.refreshToken
 
 def test_get_authors(get_api_valid):
-    api = get_api_valid.Authors
+    api = get_api_valid.authors
     res = api.get_authors()
     LOGGER.info(f"{res}")
 
-def test_post_authors(get_api, create_authors_dto,):
+def test_post_authors(get_api_valid, create_authors_dto,get_authirized):
     authors_dto = create_authors_dto
-    api = get_api
-    api.update_session_header()
+    api = get_api_valid
+    api.update_session_header(get_authirized)
     for i in range(1,2):
-        res = api.Authors.post_authors(data=authors_dto)
+        res = api.authors.post_authors(data=authors_dto)
     LOGGER.info(f"{res}")
 
 def test_get_authors_by_id(get_api_valid,id="1"):
-    api = get_api_valid.Authors
+    api = get_api_valid.authors
     res = api.get_authors_by_id(id=id)
     LOGGER.info(f"{res}")
 
 def test_put_authors_by_id(get_api_valid,update_authors_dto):
     authors_dto1 = update_authors_dto
-    api = get_api_valid.Authors
+    api = get_api_valid.authors
     authors_dto2 = api.post_authors(data=authors_dto1)
     assert authors_dto2.name == authors_dto1.name
     authors_dto2.name = "yossi"
@@ -79,7 +79,7 @@ def post_cap_authors(get_api_valid,create_authors_dto):
     # LOGGER.info(f"{res}")
 
 def delete_all_authors_created(get_api_valid):
-    api = get_api_valid.Authors
+    api = get_api_valid
     a = api.get_authors()
     for i in a:
         if i.id > 3:
@@ -92,7 +92,7 @@ def delete_all_authors_created(get_api_valid):
 
 
 def test_delete_authors_by_id(get_api_valid):
-    api = get_api_valid.Authors
+    api = get_api_valid.authors
     a = api.get_authors()
     print(a)
     # t = api.delete_authors_by_id(id=str(4))
@@ -100,30 +100,31 @@ def test_delete_authors_by_id(get_api_valid):
     # LOGGER.info(f"{t}")
 
 def test_search_authors_by_text(get_api_valid):
-    api = get_api_valid.Authors
+    api = get_api_valid.authors
     author = api.get_authors_by_id(id=1)
     search_res = api.search_authors_by_text(text=author.name)
     print(author)
     assert [author.name == name for name in search_res]
 
 def test_get_books(get_api_valid):
-    api = get_api_valid.Books
+    api = get_api_valid.books
     books = api.get_books()
     print(books)
 
-def test_post_books(get_api_valid,get_create_book_dto):
+def test_post_books(get_api_valid,get_create_book_dto,get_authirized):
     api = get_api_valid
-    books_api = api.Books
-    authors_api = api.Authors
+    api.update_session_header(get_authirized)
+    books_api = api.books
+    authors_api = api.authors
     book = get_create_book_dto
     res_get_authors = authors_api.get_authors()
     book.authorId = res_get_authors[0].id
     for i in range(1,3):
         res_post_books = books_api.post_books(data=book)
-    print(res_post_books)
+        print(res_post_books)
 
 def test_delete_books_by_id(get_api_valid):
-    books_api= get_api_valid.Books
+    books_api= get_api_valid.books
     get_books_res = books_api.get_books()
     for books in get_books_res:
         if books.id > 6:
@@ -132,11 +133,11 @@ def test_delete_books_by_id(get_api_valid):
 
 
 def test_get_books_by_author_id(get_api_valid):
-    api  = get_api_valid.Books
+    api  = get_api_valid.books
     get_books_by_author_id_res = api.get_books_by_author_id(authorid="1")
     print(get_books_by_author_id_res)
 
 def test_put_purchese_by_books_id(get_api_valid):
-    api = get_api_valid.Books
+    api = get_api_valid.books
     put_purchese_by_books_id_res = api.put_purchese_by_books_id(id="1")
     print(put_purchese_by_books_id_res)

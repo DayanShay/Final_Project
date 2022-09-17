@@ -49,17 +49,18 @@ URL = "http://localhost:7017/"
 # }
 
 
-@pytest.fixture(scope="session")
-def get_api():
-    yield Api(URL, HEADERS)
-    LOGGER.info("Finish invalid tests tests")
+# @pytest.fixture(scope="session")
+# def get_api():
+#     LOGGER.info("Start tests")
+#     yield Api(URL, HEADERS)
+#     LOGGER.info("Finish tests")
 
 
 @pytest.fixture(scope='session')
 def get_api_valid():
+    LOGGER.info("Start tests")
     yield Api(URL, HEADERS)
     LOGGER.info("Finish tests")
-
 
 @pytest.fixture(scope="session")
 def get_authirized(make_log_in_admin):
@@ -132,9 +133,9 @@ def make_login_dto(make_api_user_dto):
 #     return api
 #
 #
-# @pytest.fixture(scope="module")
-# def get_create_book_dto():
-#     return CreateBookDto(**Create_Book_Dto_test)
+@pytest.fixture(scope="module")
+def get_create_book_dto():
+    return CreateBookDto(**Create_Book_Dto_test)
 #
 #
 @pytest.fixture(scope="module")
@@ -142,9 +143,9 @@ def create_authors_dto(make_api_user_dto):
     return CreateAuthorDto(**Create_Author_Dto_test)
 #
 #
-# @pytest.fixture(scope="module")
-# def update_authors_dto(make_api_user_dto):
-#     return UpdateAuthorDto(**Update_Author_Dto_test)
+@pytest.fixture(scope="module")
+def update_authors_dto(make_api_user_dto):
+    return UpdateAuthorDto(**Update_Author_Dto_test)
 #
 #
 # @pytest.fixture(scope="module")
