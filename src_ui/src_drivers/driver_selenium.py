@@ -45,7 +45,8 @@ class Selenium(Driver):
                     elements = WebDriverWait(driver, wait).until(
                         EC.presence_of_all_elements_located(self.identy(location)))
                     flag = False
-                except:
+                except TypeError:
+                    driver.refresh()
                     flag = True
             i += 1
         return elements

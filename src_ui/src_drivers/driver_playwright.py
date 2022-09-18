@@ -1,3 +1,5 @@
+import time
+
 from playwright.sync_api import Page
 from src_ui.src_drivers.driver_config import Driver
 
@@ -22,6 +24,9 @@ class PlayWright(Driver):
         if driver is None:
             driver = self._driver
         elements = driver.query_selector_all(self.identy(location))
+        if len(elements) == 0:
+            time.sleep(2)
+            elements = driver.query_selector_all(self.identy(location))
         return elements
 
     def click_on_it(self, location):
@@ -57,9 +62,7 @@ class PlayWright(Driver):
         return self._driver.evaluate("document.URL")
 
     def get_book_img(self,location,driver=None):
-        if driver is None:
-            driver = self._driver
-        book_img = driver.get_element(location)
+        book_img = self.get_element(location,driver)
         return book_img.get_attribute("src")
 
     @staticmethod
