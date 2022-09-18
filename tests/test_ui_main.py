@@ -4,19 +4,20 @@ from tests.fixture_data import *
 from tests.fixture_restapi import *
 
 
-# def test_delete_book_by_id_and_website_check():
+def test_delete_book_by_id_and_website_check():
+    pass
 
 def test_delete_book_unauthorize(get_api_valid,get_authirized):
     api = get_api_valid
 
-    res = api.authors.delete_authors_by_id(id=800)
+    res = api.authors.delete_authors_by_id(id=950)
     print(f"moshe1 {api.session.headers,api.session.auth}")
     print(res)
 
     headers = get_authirized
     api.update_session_header(headers)
 
-    res = api.authors.delete_authors_by_id(id=800)
+    res = api.authors.delete_authors_by_id(id=950)
     print(f"moshe2 {api.session.headers,api.session.auth}")
     print(res)
     assert res
@@ -36,7 +37,7 @@ def test_login_account(make_log_in_admin):
 
 # def test_refresh_token(get_api_valid, make_log_in_admin):
 #     User_Login = make_log_in_admin
-#     res = get_api_valid.Account.refresh_token(data=User_Login)
+#     res = get_api_valid.Account.post_refresh_token(data=User_Login)
 #     LOGGER.info(f"Moshe 2 {res} , Moshe 1 {User_Login}")
 #     assert res.userId == User_Login.userId
 #     assert res.token != User_Login.token
@@ -84,19 +85,20 @@ def delete_all_authors_created(get_api_valid):
     for i in a:
         if i.id > 3:
             t = api.delete_authors_by_id(id=str(i.id))
-            # LOGGER.info(f"{t}")
+            LOGGER.info(f"{t}")
 
 # def test_add_and_delete_10000(get_authors_api,create_authors_dto):
 #     post_cap_authors(get_authors_api,create_authors_dto)
 #     delete_all_authors_created(get_authors_api)
 
 
-def test_delete_authors_by_id(get_api_valid):
-    api = get_api_valid.authors
-    a = api.get_authors()
+def test_delete_authors_by_id(get_api_valid,get_authirized):
+    api = get_api_valid
+    api.update_session_header(get_authirized)
+    a = api.authors.get_authors()
     print(a)
     # t = api.delete_authors_by_id(id=str(4))
-    delete_all_authors_created(api)
+    delete_all_authors_created(api.authors)
     # LOGGER.info(f"{t}")
 
 def test_search_authors_by_text(get_api_valid):
@@ -137,7 +139,8 @@ def test_get_books_by_author_id(get_api_valid):
     get_books_by_author_id_res = api.get_books_by_author_id(authorid="1")
     print(get_books_by_author_id_res)
 
-def test_put_purchese_by_books_id(get_api_valid):
-    api = get_api_valid.books
-    put_purchese_by_books_id_res = api.put_purchese_by_books_id(id="1")
+def test_put_purchese_by_books_id(get_api_valid,get_authirized):
+    api = get_api_valid
+    api.update_session_header(get_authirized)
+    put_purchese_by_books_id_res = api.books.put_purchese_by_books_id(id="2")
     print(put_purchese_by_books_id_res)

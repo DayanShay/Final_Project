@@ -53,7 +53,7 @@ class Selenium(Driver):
     def click_on_it(self, location: tuple[[], str], driver: [] = None, wait: int = 5):
         if driver is None:
             driver = self._driver
-        button = self.get_element(location, driver)
+        button = self.get_element(location=location, driver=driver)
         flag = True
         i = 0
         while flag and i < 3:
@@ -115,3 +115,17 @@ class Selenium(Driver):
 
     def switch_to_default(self):
         self._driver.switch_to.default_content()
+
+
+    def page_url(self):
+        return self._driver.current_url
+
+    def get_book_img(self,location,driver=None):
+        if driver is None:
+            driver = self._driver
+        book_img = self.get_element(location,driver)
+        return book_img.get_attribute("src")
+
+    @staticmethod
+    def get_text(self):
+        return self.text

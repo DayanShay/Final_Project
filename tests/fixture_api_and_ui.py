@@ -6,19 +6,20 @@ from src_api.api.base_api import BaseApi
 from src_api.models import *
 from src_api.api import *
 from tests import fixture_data
+
+
 # from tests.fixture_restapi import *
 
 
 class Api():
     def __init__(self, url: str, headers):
         self._session = requests.session()
-        self._account = Account_Api(url, headers,self._session)
-        self._authors = Authors_Api(url, headers,self._session)
-        self._books = Books_Api(url, headers,self._session)
+        self._account = Account_Api(url, headers, self._session)
+        self._authors = Authors_Api(url, headers, self._session)
+        self._books = Books_Api(url, headers, self._session)
 
     def update_session_header(self, headers):
         self._session.headers.update(headers)
-
 
     @property
     def session(self):
@@ -35,8 +36,6 @@ class Api():
     @property
     def books(self):
         return self._books
-
-
 
     # @pytest.fixture(scope="session")
     # def get_account_api(self):
@@ -61,7 +60,7 @@ class Api():
     # def make_log_in_admin(get_account_api, make_login_dto):
     #     User_Login = make_login_dto
     #     api = get_account_api
-    #     res = api.login_account(data=User_Login)
+    #     res = api.post_login(data=User_Login)
     #     LOGGER.info(f"{res}")
     #     return res
     #
@@ -69,7 +68,7 @@ class Api():
     # def make_log_in_admin(get_account_api, make_login_dto):
     #     User_Login = make_login_dto
     #     api = get_account_api
-    #     res = api.login_account(data=User_Login)
+    #     res = api.post_login(data=User_Login)
     #     LOGGER.info(f"{res}")
     #     return res
     #

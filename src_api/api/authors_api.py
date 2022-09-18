@@ -24,7 +24,7 @@ class Authors_Api(BaseApi):
     def post_authors(self,response):
         if response.ok:
             return Author(**response.json())
-        return response.reason
+        return API_Func.res_dict(response.status_code, response.text)
 
     @BaseApi.make_a_req(url=f"api/Authors/",action="get",param="id")
     def get_authors_by_id(self, response):
@@ -42,7 +42,7 @@ class Authors_Api(BaseApi):
     def delete_authors_by_id(self, response):
         if response.ok:
             return response.reason
-        return response.reason
+        return API_Func.res_dict(response.status_code, response.text)
 
 
     @BaseApi.make_a_req(url=f"api/Authors/search/",action="get",param='text')
@@ -52,7 +52,7 @@ class Authors_Api(BaseApi):
             for author in response.json():
                 authors.append(GetAuthorDto(**author))
             return authors
-        return response.text
+        return API_Func.res_dict(response.status_code, response.text)
 
 
 

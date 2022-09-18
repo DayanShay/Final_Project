@@ -1,11 +1,14 @@
 from abc import ABC, abstractmethod
 
+from selenium.webdriver.chrome.webdriver import WebDriver
+
+
 class Driver(ABC):
     """
     abstractmethod for creating driver
     """
 
-    def __init__(self, driver):
+    def __init__(self, driver:WebDriver):
         self._driver = driver
 
     @abstractmethod
@@ -32,6 +35,15 @@ class Driver(ABC):
     def alerts_hendler(self):
         pass
 
+    @abstractmethod
+    def page_url(self):
+        pass
+    @abstractmethod
+    def get_text(self):
+        pass
+    @abstractmethod
+    def get_book_img(self,book):
+        pass
 
 
 class Meted:

@@ -1,8 +1,11 @@
+import time
+
+from selenium.webdriver.chrome.webdriver import WebDriver
 from src_ui.src_drivers.driver_config import Meted, Driver
 
 
 class Base_Page:
-    def __init__(self, driver : Driver):
+    def __init__(self, driver:Driver):
         self._driver = driver
         self.locations_base = {"Login": (Meted.LINK_TEXT,"Log In"),
                                "Book_Store_Logo_button": (Meted.LINK_TEXT, "Book Store"),
@@ -42,3 +45,7 @@ class Base_Page:
             self._driver.click_on_it(self.locations_base["Search_btn"],search_place)
         return SearchPage(self._driver)
 
+
+    def get_page_url(self):
+        time.sleep(2)
+        return self._driver.page_url()

@@ -18,7 +18,6 @@ class BaseApi:
         self._session.headers.update(headers)
 
 
-
     @staticmethod
     def make_a_req(url=None, param=None, action=None):
         def formator(func, **kwargs):

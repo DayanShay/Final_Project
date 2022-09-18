@@ -22,34 +22,34 @@ def args_from_user(pytestconfig):
     return url, browser, path_driver, sys_use, remote
 
 
-@pytest.fixture
-def make_driver(args_from_user) -> Driver:
-    url, browser, path_driver, sys_use, remote = args_from_user
-    if not remote:
-        if sys_use == "selenium":
-            if browser == "Chrome":
-                driver = webdriver.Chrome(path_driver)
-            elif browser == "Firefox":
-                driver = webdriver.Firefox(path_driver)
-            driver.maximize_window()
-            driver.get(url)
-            yield Selenium(driver)
-            driver.quit()
-        elif sys_use == "playwright":
-            with sync_playwright() as p:
-                if browser == "Chrome":
-                    driver = p.chromium.launch(headless=False)
-                elif browser == "firefox":
-                    driver = p.firefox.launch(headless=False)
-                page = driver.new_page()
-                page.goto(url)
-                yield PlayWright(page)
-                driver.close()
-    else:
-        driver = driver_remote(browser)
-        driver.get(url)
-        yield Selenium(driver)
-        driver.quit()
+# @pytest.fixture
+# def make_driver(args_from_user) -> Driver:
+#     url, browser, path_driver, sys_use, remote = args_from_user
+#     if not remote:
+#         if sys_use == "selenium":
+#             if browser == "Chrome":
+#                 driver = webdriver.Chrome(path_driver)
+#             elif browser == "Firefox":
+#                 driver = webdriver.Firefox(path_driver)
+#             driver.maximize_window()
+#             driver.get(url)
+#             yield Selenium(driver)
+#             driver.quit()
+#         elif sys_use == "playwright":
+#             with sync_playwright() as p:
+#                 if browser == "Chrome":
+#                     driver = p.chromium.launch(headless=False)
+#                 elif browser == "firefox":
+#                     driver = p.firefox.launch(headless=False)
+#                 page = driver.new_page()
+#                 page.goto(url)
+#                 yield PlayWright(page)
+#                 driver.close()
+#     else:
+#         driver = driver_remote(browser)
+#         driver.get(url)
+#         yield Selenium(driver)
+#         driver.quit()
 
 
 @pytest.fixture

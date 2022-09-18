@@ -12,19 +12,19 @@ class Account_Api(BaseApi):
     @BaseApi.make_a_req(url="api/Account/register", action="post")
     def post_account(self,response):
         if response.ok:
-            return response.text
-        return response.text
+            return response.reason
+        return API_Func.res_dict(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Account/login", action="post")
-    def login_account(self,response):
+    def post_login(self, response) -> AuthResponseDto:
         if response.ok:
             return AuthResponseDto(**response.json())
-        return response.text
+        return API_Func.res_dict(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Account/refreshtoken", action="post")
-    def refresh_token(self,response):
+    def post_refresh_token(self, response):
         if response.ok:
             return AuthResponseDto(**response.json())
-        return response.json()
+        return API_Func.res_dict(response.status_code, response.text)
 
 
