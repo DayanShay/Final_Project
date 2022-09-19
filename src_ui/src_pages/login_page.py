@@ -23,13 +23,16 @@ class LoginPage(Base_Page):
         self._driver.send_keys_to(self.locations["Password_box"],text=text)
 
     def click_submit(self):
-        self._driver.click_on_it(self.locations["Submit_button"])
+        Submit_button = self._driver.get_element(self.locations["Submit_button"])
+        self._driver.click_on_it(Submit_button)
 
     def click_back_to_login(self):
-        self._driver.click_on_it(self.locations["Back_To_Login_button"])
+        Back_To_Login_button = self._driver.get_element(self.locations["Back_To_Login_button"])
+        self._driver.click_on_it(Back_To_Login_button)
 
     def click_register(self):
-        self._driver.click_on_it(self.locations["Register_button"])
+        register_btn = self._driver.get_element(self.locations["Register_button"])
+        self._driver.click_on_it(register_btn)
 
     def fill_first_name(self,text):
         self._driver.send_keys_to(self.locations["FirstName_box"],text=text)

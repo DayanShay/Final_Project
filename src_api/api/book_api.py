@@ -32,13 +32,13 @@ class Books_Api(BaseApi):
     @BaseApi.make_a_req(url="api/Books/", action="put", param="id")
     def put_books_by_id(self, response):
         if response.ok:
-            return response.json()
+            return response.reason
         return API_Func.res_dict(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Books/", action="delete", param="id")
     def delete_books_by_id(self, response):
         if response.ok:
-            return response.text
+            return response.reason
         return API_Func.res_dict(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Books/findauthor/", action="get", param="authorid")
@@ -54,5 +54,5 @@ class Books_Api(BaseApi):
     def put_purchese_by_books_id(self,response):
         if response.ok:
             return Book(**response.json())
-        return API_Func.res_dict(response.status_code, response.text)
+        return response.reason
 

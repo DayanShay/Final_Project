@@ -28,8 +28,9 @@ class StorePage(Base_Page):
     #     return None
 
     def click_buy(self, book):
-        self._driver.click_on_it(self._locations["buy"], book)
-        self._driver.alerts_hendler()
+        cart_footer = self._driver.get_element(self._locations["card_footer"],book)
+        buy_button = self._driver.get_element(self._locations["buy"],cart_footer)
+        return self._driver.alerts_hendler(buy_button)
 
     def get_book_img(self,book):
         book_img = self._driver.get_book_img(self._locations["book_img"],book)
@@ -66,5 +67,6 @@ class StorePage(Base_Page):
         return card_footer[:-8:1]
 
     def get_book_container(self):
+        time.sleep(3)
         books = self._driver.get_elements(self._locations["book-container"])
         return books

@@ -16,11 +16,11 @@ class Driver(ABC):
         pass
 
     @abstractmethod
-    def get_elements(self, location,driver=None, wait: int = 5):
+    def get_elements(self, location,driver=None):
         pass
 
     @abstractmethod
-    def click_on_it(self, location, wait: int = 5):
+    def click_on_it(self, element):
         pass
 
     @abstractmethod
@@ -32,7 +32,7 @@ class Driver(ABC):
         pass
 
     @abstractmethod
-    def alerts_hendler(self):
+    def alerts_hendler(self,element):
         pass
 
     @abstractmethod
@@ -43,6 +43,9 @@ class Driver(ABC):
         pass
     @abstractmethod
     def get_book_img(self,book):
+        pass
+    @abstractmethod
+    def refrash_page(self):
         pass
 
 

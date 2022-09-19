@@ -64,10 +64,19 @@ URL = "http://localhost:7017/"
 #     LOGGER.info("Finish tests")
 
 
+
+
+
 @pytest.fixture(scope='class')
-def get_api_valid():
+def get_api_UnAutho():
     LOGGER.info("Start tests")
     yield Api(URL, HEADERS)
+    LOGGER.info("Finish tests")
+
+@pytest.fixture(scope='class')
+def get_api_Autho(get_authirized):
+    LOGGER.info("Start tests")
+    yield Api(URL, get_authirized)
     LOGGER.info("Finish tests")
 
 @pytest.fixture(scope="session")
@@ -78,10 +87,10 @@ def get_authirized(make_log_in_admin):
     return HEADERS
 
 @pytest.fixture(scope="session")
-def make_log_in_admin(get_api_valid, make_login_dto):
+def make_log_in_admin(get_api_unautho, make_login_dto):
     User_Login = make_login_dto
     User_Login.email = Admin_email
-    api = get_api_valid.account
+    api = get_api_unautho.account
     res = api.post_login(data=User_Login)
     LOGGER.info(f"{res}")
     return res
@@ -173,18 +182,18 @@ def get_login_dto_for_tests():
 #
 #
 # @pytest.fixture(scope="class")
-# def make_log_in_admin(get_api_valid, make_login_dto):
+# def make_log_in_admin(get_api_unautho, make_login_dto):
 #     User_Login = make_login_dto
 #     User_Login.email = Admin_email
-#     api = get_api_valid.Account
+#     api = get_api_unautho.Account
 #     res = api.post_login(data=User_Login)
 #     LOGGER.info(f"{res}")
 #     return res
 #
 #
 # @pytest.fixture(scope="class")
-# def make_auth_bearer(make_log_in_admin, get_api_valid):
-#     api = get_api_valid
+# def make_auth_bearer(make_log_in_admin, get_api_unautho):
+#     api = get_api_unautho
 #     res = make_log_in_admin
 #     my_token = res.token
 #     HEADERS = {'Authorization': f'Bearer {my_token}'}
@@ -193,14 +202,14 @@ def get_login_dto_for_tests():
 #     return api
 #
 #
-@pytest.fixture(scope="module")
-def get_create_book_dto():
-    return CreateBookDto(**Create_Book_Dto_test)
+# @pytest.fixture(scope="function")
+# def get_create_book_dto():
+#     return CreateBookDto(**Create_Book_Dto_test)
 #
 #
-@pytest.fixture(scope="module")
-def create_authors_dto(make_api_user_dto):
-    return CreateAuthorDto(**Create_Author_Dto_test)
+# @pytest.fixture(scope="function")
+# def create_authors_dto():
+#     return CreateAuthorDto(**Create_Author_Dto_test)
 #
 #
 @pytest.fixture(scope="module")

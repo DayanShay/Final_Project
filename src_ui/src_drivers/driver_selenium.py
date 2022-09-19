@@ -1,3 +1,5 @@
+import time
+
 from src_ui.src_drivers.driver_config import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,6 +28,7 @@ class Selenium(Driver):
                     element = WebDriverWait(driver, wait).until(EC.presence_of_element_located(self.identy(location)))
                     flag = False
                 except TimeoutException:
+                    self.refrash_page()
                     flag = True
             i += 1
         return element
@@ -40,34 +43,24 @@ class Selenium(Driver):
             try:
                 elements = WebDriverWait(driver, wait).until(EC.presence_of_all_elements_located(self.identy(location)))
                 flag = False
-            except:
+            except TimeoutException:
+                self.refrash_page()
                 try:
                     elements = WebDriverWait(driver, wait).until(
                         EC.presence_of_all_elements_located(self.identy(location)))
                     flag = False
-                except TypeError:
-                    driver.refresh()
+                except TimeoutException:
+                    self.refrash_page()
                     flag = True
             i += 1
         return elements
 
-    def click_on_it(self, location: tuple[[], str], driver: [] = None, wait: int = 5):
-        if driver is None:
-            driver = self._driver
-        button = self.get_element(location=location, driver=driver)
-        flag = True
-        i = 0
-        while flag and i < 3:
-            try:
-                button.click()
-                flag = False
-            except TimeoutException:
-                try:
-                    button.click()
-                    flag = False
-                except ElementClickInterceptedException:
-                    flag = True
-            i += 1
+    def click_on_it(self, location):
+        try:
+            location.click()
+        except (ElementClickInterceptedException,StaleElementReferenceException):
+            location.click()
+
 
     def send_keys_to(self, location: tuple[[], str], driver: [] = None, text: str = None):
         if driver is None:
@@ -86,18 +79,20 @@ class Selenium(Driver):
                    }
         return actions[location[0]], location[1]
 
-    def alerts_hendler(self, wait=15):
+    def alerts_hendler(self,buy_button, wait=15):
+        self.click_on_it(buy_button)
         allert1 = WebDriverWait(self._driver, wait).until(EC.alert_is_present())
         if allert1:
-            print(allert1.text)
+            text_1 = allert1.text
             allert1.accept()
             try:
                 allert2 = WebDriverWait(self._driver, wait).until(EC.alert_is_present())
-                if allert2:
-                    print(allert2.text)
-                    allert2.accept()
-            except:
-                pass
+            except (NoAlertPresentException , TimeoutException):
+                return text_1
+            if allert2:
+                text_2 = allert2.text
+                allert2.accept()
+                return text_1,text_2
 
     def get_frame(self, location):
         flag = True
@@ -110,7 +105,7 @@ class Selenium(Driver):
                 try:
                     WebDriverWait(self._driver, 10).until(EC.frame_to_be_available_and_switch_to_it(location))
                     flag = False
-                except:
+                except TimeoutException:
                     flag = True
             i += 1
 
@@ -130,3 +125,7 @@ class Selenium(Driver):
     @staticmethod
     def get_text(self):
         return self.text
+
+    def refrash_page(self):
+        self._driver.refresh()
+

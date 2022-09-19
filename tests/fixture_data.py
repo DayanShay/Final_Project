@@ -1,5 +1,5 @@
-Admin_email = "admin@sela.co.il"
 User1_test = "test@check.co.il"
+Admin_email = "admin@sela.co.il"
 Generic_pass = "12345"
 User1_test_Low = "test1@check.co.il"
 User2_test_high = "test2@check.co.il"
@@ -13,13 +13,17 @@ No_email_filled_msg = "The Email field is required."
 Invalid_password_msg = "Your password is limited to 4 to 15 characters"
 No_password_filled_msg = "The Password field is required."
 Invalid_msg = (Validation_error, Invalid_email_msg, No_email_filled_msg, Invalid_password_msg, No_password_filled_msg)
+must_be_signed = "Must be signed in to purchase."
+Unauthorized_msg = 'Unauthorized'
+no_ammount_in_stoke = 'AxiosError: Request failed with status code 400'
+perchuse_error_api = 'Bad Request'
 Dup_account = {
   "DuplicateUserName": [
     "Username 'usasdasdasder@example.com' is already taken."
   ]
 }
 
-
+HEADERS = {'accept': 'application/json'}
 
 
 
@@ -116,10 +120,10 @@ Update_Author_Dto_test = {
     "id": 1
 }
 Create_Book_Dto_test = {
-    "name": "string",
-    "description": "string",
-    "price": 0,
-    "amountInStock": 2,
-    "imageUrl": "string",
-    "authorId": 1
+    "name": "Qa & Automation testing",
+    "description": "Learn how to Become Qa & Automation Engineer , Step by Step.",
+    "price": 1200,
+    "amountInStock": 15,
+    "imageUrl": "https://www.zibtek.com/blog/content/images/size/w2000/2020/03/Yellow-Modern-Creative-Corporate-Social-Media-Strategy-Presentation--13--2.png",
+    "authorId": 0
 }
