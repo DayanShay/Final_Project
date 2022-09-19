@@ -1,10 +1,3 @@
-import json
-import time
-
-import pytest
-import logging
-from src_api.models import *
-from tests.fixture_data import *
 from tests.fixture_restapi import *
 
 
@@ -142,12 +135,12 @@ class Test_store_page_and_purchase_features:
         book_name = store_page.get_book_name(book_from_web_after)
         res_put = api.books.put_purchese_by_books_id(id=book_from_api_after.id)
         assert res_put.name == book_name
-        assert int(ammount_in_stock_after_web) == int(ammount_in_stock_before_web)-1
-        assert book_from_api_before.amountInStock-1 == book_from_api_after.amountInStock
+        assert int(ammount_in_stock_after_web) == int(ammount_in_stock_before_web) - 1
+        assert book_from_api_before.amountInStock - 1 == book_from_api_after.amountInStock
         assert self.make_purches_msg(book_name) in msg_purchse
 
-
-    def test_purcuhes_no_ammount_in_stock(self, get_to_main_page, get_api_UnAutho, create_authors_dto, get_create_book_dto):
+    def test_purcuhes_no_ammount_in_stock(self, get_to_main_page, get_api_UnAutho, create_authors_dto,
+                                          get_create_book_dto):
         user_login = self.make_login_dto(USER_Admin)
         page = get_to_main_page
         store_page = page.make_login(user_login)
@@ -163,6 +156,7 @@ class Test_store_page_and_purchase_features:
         books_from_api_before = api.books.get_books()
         book_from_api_before = books_from_api_before[-1]
         book_from_web_before = books_from_store[-1]
+        book_name_from_web = store_page.get_book_name(book_from_web_before)
         ammount_in_stock_before = store_page.get_ammount_in_stock_of_book(book_from_web_before)
         msg_purchse = store_page.click_buy(book_from_web_before)
         store_page.page_refrash()
@@ -172,13 +166,12 @@ class Test_store_page_and_purchase_features:
         res_put = api.books.put_purchese_by_books_id(id=book_from_api_before.id)
         books_from_api_after = api.books.get_books()
         book_from_api_after = books_from_api_after[-1]
+        assert res_post_book.name == book_name_from_web
+        assert res_put == perchuse_error_api
         assert int(ammount_in_stock_after) == int(ammount_in_stock_before)
         assert book_from_api_before == book_from_api_after
         assert msg_purchse != self.make_purches_msg(book.name)
         self.delete_all_authors_and_books_created(api)
-
-
-
 
     @staticmethod
     def make_sesion_autho(api, user_login):
@@ -194,13 +187,13 @@ class Test_store_page_and_purchase_features:
         api.update_session_header(HEADERS)
         return api
 
-
-    def make_login_dto(self, userdto: ApiUserDto):
+    @staticmethod
+    def make_login_dto(userdto: dict):
         user_for_test = LoginDto(userdto["email"], userdto["password"])
         return user_for_test
 
-
-    def make_purches_msg(self, book_name):
+    @staticmethod
+    def make_purches_msg(book_name):
         return f'Thank you for your purchase of {book_name}'
 
     @pytest.fixture(scope="function")
@@ -217,8 +210,8 @@ class Test_store_page_and_purchase_features:
         authors = api.authors.get_authors()
         for author in authors:
             if author.id > 3:
-                t = api.authors.delete_authors_by_id(id=str(author.id))
+                api.authors.delete_authors_by_id(id=str(author.id))
         books = api.books.get_books()
         for book in books:
             if book.id > 6:
-                t = api.books.delete_books_by_id(id=str(book.id))
+                api.books.delete_books_by_id(id=str(book.id))
