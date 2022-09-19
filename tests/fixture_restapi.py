@@ -9,15 +9,13 @@ from src_ui.src_drivers import *
 from selenium import webdriver
 
 LOGGER = logging.getLogger(__name__)
-HEADERS = {'accept': 'application/json'}
-
-URL = "http://localhost:7017/"
 
 
 @pytest.fixture(scope='class')
-def get_api_UnAutho():
+def get_api_UnAutho(pytestconfig):
+    api_url = pytestconfig.getoption("api_url")
     LOGGER.info("Start tests")
-    yield Api(URL, HEADERS)
+    yield Api(api_url, HEADERS)
     LOGGER.info("Finish tests")
 
 
@@ -28,12 +26,18 @@ def args_from_user(pytestconfig) -> list[str]:
     path_driver = pytestconfig.getoption("path_driver")
     sys_use = pytestconfig.getoption("sys_use")
     remote = pytestconfig.getoption("remote")
-    return url, browser, path_driver, sys_use, remote
+    remote_url = pytestconfig.getoption("remote_url")
+    return url, browser, path_driver, sys_use, remote, remote_url
+
+@pytest.fixture
+def get_base_url(pytestconfig):
+    url = pytestconfig.getoption("url")
+    return url
 
 
 @pytest.fixture
 def make_driver(args_from_user) -> Driver:
-    url, browser, path_driver, sys_use, remote = args_from_user
+    url, browser, path_driver, sys_use, remote, remote_url = args_from_user
     if not remote:
         if sys_use == "selenium":
             driver = selenium_driver_operator(url, browser, path_driver)
@@ -48,7 +52,7 @@ def make_driver(args_from_user) -> Driver:
             driver.close_page()
             PW.stop()
     else:
-        driver = driver_remote(browser,url)
+        driver = driver_remote(browser, url, remote_url)
         yield driver
         driver.close_page()
 
@@ -88,10 +92,10 @@ def playwright_driver_operator(url, browser):
         driver = PW.firefox.launch(headless=False)
     page = driver.new_page()
     page.goto(url)
-    return PlayWright(page),PW
+    return PlayWright(page), PW
 
 
-def driver_remote(browser,url):
+def driver_remote(browser, url, remote_url):
     if browser == "Chrome":
         driver_options = webdriver.ChromeOptions()
     elif browser == "Firefox":
@@ -100,16 +104,13 @@ def driver_remote(browser,url):
         raise AssertionError("Currently Driver not supporting that kind of browser")
     browser_new = browser.lower()
     driver = webdriver.Remote(
-        command_executor='http://127.0.0.1:4444/wd/hub',
+        command_executor=f'{remote_url}',
         desired_capabilities={'javascriptEnabled': True,
-                              "browserName":f"{browser_new}"},
-        options= driver_options
+                              "browserName": f"{browser_new}"},
+        options=driver_options
     )
     driver.get(url)
     return Selenium(driver)
-
-
-
 
 
 def make_login_account(user: ApiUserDto):
@@ -117,15 +118,14 @@ def make_login_account(user: ApiUserDto):
     return login_user
 
 
-
 def make_register_account(info: dict):
     reguster_user = ApiUserDto(**info)
     return reguster_user
 
+
 def make_dup_user_msg(email):
     dup_msg = '{"DuplicateUserName":' + f'["Username \'{email}\' is already taken."]'"}"
     return dup_msg
-
 
 
 @pytest.fixture(scope="function")
@@ -166,5 +166,3 @@ def delete_all_authors_and_books_created(api_from_test):
     for book in books:
         if book.id > 6:
             api.books.delete_books_by_id(id=str(book.id))
-            
-            

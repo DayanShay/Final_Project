@@ -1,6 +1,7 @@
 from tests.fixture_restapi import *
 
 
+@pytest.mark.run(order=2)
 class Test_store_page_and_purchase_features:
 
     def test_check_contant_of_store_page(self, get_to_main_page, get_api_UnAutho):
@@ -177,4 +178,3 @@ class Test_store_page_and_purchase_features:
         assert book_from_api_before == book_from_api_after
         assert msg_purchse != make_purches_msg(book.name)
         delete_all_authors_and_books_created(api)
-

@@ -8,6 +8,7 @@ from tests.fixture_data import *
 from tests.fixture_restapi import *
 
 
+@pytest.mark.run(order=1)
 class Test_login_and_register_features:
 
     @pytest.mark.parametrize("test_input,expected", [(USER_no_email_and_no_pass, Invalid_msg),
@@ -24,7 +25,7 @@ class Test_login_and_register_features:
                                                      (USER_withemail_invalid_low_password, [Invalid_password_msg]),
                                                      (USER_withemail_invalid_high_password, [Invalid_password_msg])
                                                      ])
-    def test_register_on_Api_with_Invalid_data(self, get_api_UnAutho, get_to_main_page, test_input: dict, expected):
+    def test_register_on_Api_with_Invalid_data(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict, expected):
         api = get_api_UnAutho
         invalid_register_user = make_register_account(test_input)
         res_register_invalid = api.account.post_account(data=invalid_register_user)
@@ -38,7 +39,7 @@ class Test_login_and_register_features:
         page = get_to_main_page
         page.click_log_in()
         store_page = page.make_login(invalid_login_user)
-        assert store_page.get_page_url() == "http://localhost/"
+        assert store_page.get_page_url() == get_base_url
 
     @pytest.mark.parametrize("test_input,expected", [(USER_no_email_and_no_pass, Invalid_msg),
                                                      (USER_invalid_email_and_no_pass,
@@ -54,17 +55,17 @@ class Test_login_and_register_features:
                                                      (USER_withemail_invalid_low_password, [Invalid_password_msg]),
                                                      (USER_withemail_invalid_high_password, [Invalid_password_msg])
                                                      ])
-    def test_register_on_Website_with_Invalid_data(self, get_to_main_page, get_api_UnAutho, expected, test_input: dict):
+    def test_register_on_Website_with_Invalid_data(self,get_base_url, get_to_main_page, get_api_UnAutho, expected, test_input: dict):
         page = get_to_main_page
         page.click_log_in()
 
         register_user = make_register_account(test_input)
         login_user = make_login_account(register_user)
         page.make_register(register_user)
-        assert page.get_page_url() == "http://localhost/register"
+        assert page.get_page_url() == f"{get_base_url}register"
         page.click_back_to_login()
         page.make_login(login_user)
-        assert page.get_page_url() == "http://localhost/"
+        assert page.get_page_url() == f"{get_base_url}"
         api = get_api_UnAutho
         invalid_login_user = make_login_account(register_user)
         res_login_invalid = api.account.post_login(data=invalid_login_user)
@@ -72,39 +73,39 @@ class Test_login_and_register_features:
             assert msg in res_login_invalid["msg"]
 
     @pytest.mark.parametrize("test_input", [(USER_Admin)])
-    def test_register_on_Website_with_Adminuser(self, get_to_main_page, get_api_UnAutho, test_input: dict):
+    def test_register_on_Website_with_Adminuser(self,get_base_url, get_to_main_page, get_api_UnAutho, test_input: dict):
         page = get_to_main_page
         page.click_log_in()
         register_user = make_register_account(test_input)
         login_user = make_login_account(register_user)
         page.make_register(register_user)
-        assert page.get_page_url() == "http://localhost/register"
+        assert page.get_page_url() == f"{get_base_url}register"
         page.click_back_to_login()
         store_page = page.make_login(login_user)
         api = get_api_UnAutho
         login_user = make_login_account(register_user)
         res_login = api.account.post_login(data=login_user)
-        assert store_page.get_page_url() == "http://localhost/store"
+        assert store_page.get_page_url() == f"{get_base_url}store"
         assert res_login.token is not None
 
     @pytest.mark.parametrize("test_input", [(USER_testuser)])
-    def test_register_on_Website_with_Testuser(self, get_to_main_page, get_api_UnAutho, test_input: dict):
+    def test_register_on_Website_with_Testuser(self,get_base_url, get_to_main_page, get_api_UnAutho, test_input: dict):
         page = get_to_main_page
         page.click_log_in()
         register_user = make_register_account(test_input)
         login_user = make_login_account(register_user)
         page.make_register(register_user)
-        assert page.get_page_url() == "http://localhost/register"
+        assert page.get_page_url() == f"{get_base_url}register"
         page.click_back_to_login()
         store_page = page.make_login(login_user)
         api = get_api_UnAutho
         login_user = make_login_account(register_user)
         res_login = api.account.post_login(data=login_user)
-        assert store_page.get_page_url() == "http://localhost/store"
+        assert store_page.get_page_url() == f"{get_base_url}store"
         assert res_login.token is not None
 
     @pytest.mark.parametrize("test_input", [(USER_Admin)])
-    def test_register_on_API_with_valid_Adminuser(self, get_api_UnAutho, get_to_main_page, test_input: dict):
+    def test_register_on_API_with_valid_Adminuser(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
         res_register1 = api.account.post_account(data=register_user)
@@ -115,10 +116,10 @@ class Test_login_and_register_features:
         page = get_to_main_page
         page.click_log_in()
         store_page = page.make_login(login_user)
-        assert store_page.get_page_url() == "http://localhost/store"
+        assert store_page.get_page_url() == f"{get_base_url}store"
 
     @pytest.mark.parametrize("test_input", [(USER_testuser)])
-    def test_register_on_Website_with_valid_Testuser(self, get_api_UnAutho, get_to_main_page, test_input: dict):
+    def test_register_on_Website_with_valid_Testuser(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
         res_register1 = api.account.post_account(data=register_user)
@@ -130,10 +131,10 @@ class Test_login_and_register_features:
         page.click_log_in()
 
         store_page = page.make_login(login_user)
-        assert store_page.get_page_url() == "http://localhost/store"
+        assert store_page.get_page_url() == f"{get_base_url}store"
 
     @pytest.mark.parametrize("test_input", [(USER_testuser), (USER_Admin)])
-    def test_register_Dup_accounts_on_API(self, get_api_UnAutho, get_to_main_page, test_input: dict):
+    def test_register_Dup_accounts_on_API(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
         res_register1 = api.account.post_account(data=register_user)
@@ -145,9 +146,7 @@ class Test_login_and_register_features:
         page = get_to_main_page
         page.click_log_in()
         store_page = page.make_login(login_user)
-        assert store_page.get_page_url() == "http://localhost/store"
-
-
+        assert store_page.get_page_url() == f"{get_base_url}store"
 
     def make_dup_user_msg(self, email):
         return '{"DuplicateUserName":' + f'["Username \'{email}\' is already taken."]'"}"
