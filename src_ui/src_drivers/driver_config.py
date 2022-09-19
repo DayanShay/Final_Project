@@ -39,7 +39,7 @@ class Driver(ABC):
     def page_url(self):
         pass
     @abstractmethod
-    def get_text(self):
+    def get_text(self,element):
         pass
     @abstractmethod
     def get_book_img(self,book):
@@ -47,7 +47,9 @@ class Driver(ABC):
     @abstractmethod
     def refrash_page(self):
         pass
-
+    @abstractmethod
+    def close_page(self):
+        pass
 
 class Meted:
     ID = "ID"

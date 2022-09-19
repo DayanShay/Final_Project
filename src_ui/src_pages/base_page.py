@@ -37,7 +37,7 @@ class Base_Page:
     def click_authors_button(self):
         from src_ui.src_pages.authors_page import AuthorsPage
         Authors_button = self._driver.get_element(self.locations_base["Authors_button"])
-        self._driver.click_on_it(self.locations_base[Authors_button])
+        self._driver.click_on_it(Authors_button)
         return AuthorsPage(self._driver)
 
     def search(self,text):

@@ -72,10 +72,11 @@ class PlayWright(Driver):
         book_img = self.get_element(location,driver)
         return book_img.get_attribute("src")
 
-    @staticmethod
-    def get_text(self):
-        return self.inner_text()
+    def get_text(self,element):
+        return element.inner_text()
 
     def refrash_page(self):
         self._driver.reload()
+    def close_page(self):
+        self._driver.close()
 

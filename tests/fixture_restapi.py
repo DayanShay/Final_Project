@@ -17,7 +17,6 @@ from src_ui.src_drivers.driver_config import Driver
 from selenium import webdriver
 from src_ui.src_pages.login_page import LoginPage
 
-
 LOGGER = logging.getLogger(__name__)
 HEADERS = {'accept': 'application/json'}
 
@@ -29,6 +28,7 @@ def get_api_UnAutho():
     LOGGER.info("Start tests")
     yield Api(URL, HEADERS)
     LOGGER.info("Finish tests")
+
 
 @pytest.fixture
 def args_from_user(pytestconfig):
@@ -46,23 +46,19 @@ def make_driver(args_from_user) -> Driver:
     if not remote:
         if sys_use == "selenium":
             driver = selenium_driver_operator(url, browser, path_driver)
-            yield driver
-            driver.quit()
         elif sys_use == "playwright":
             driver = playwright_driver_operator(url, browser)
-            yield driver
-            driver.close()
     else:
-        driver = driver_remote(browser)
-        driver.get(url)
-        yield Selenium(driver)
-        driver.quit()
+        driver = driver_remote(browser,url)
+    yield driver
+    driver.close_page()
 
 
 @pytest.fixture
 def get_to_main_page(make_driver):
     login_page = LoginPage(make_driver)
     return login_page
+
 
 @pytest.fixture(scope="session")
 def make_api_user_dto(email=None, password=None):
@@ -86,13 +82,34 @@ def selenium_driver_operator(url, browser, path_driver):
 
 
 def playwright_driver_operator(url, browser):
-    with sync_playwright() as p:
-        if browser == "Chrome":
-            driver = p.chromium.launch(headless=False)
-        elif browser == "firefox":
-            driver = p.firefox.launch(headless=False)
-        page = driver.new_page()
-        page.goto(url)
-        yield PlayWright(page)
+    PW = sync_playwright().start()
+    if browser == "Chrome":
+        driver = PW.chromium.launch(headless=False)
+    elif browser == "Firefox":
+        driver = PW.firefox.launch(headless=False)
+    page = driver.new_page()
+    page.goto(url)
+    return PlayWright(page)
 
 
+def driver_remote(browser,url):
+    if browser == "Chrome":
+        driver_options = webdriver.ChromeOptions()
+    elif browser == "Firefox":
+        driver_options = webdriver.FirefoxOptions()
+    else:
+        raise AssertionError("Currently Driver not supporting that kind of browser")
+    browser_new = browser.lower()
+    driver = webdriver.Remote(
+        command_executor='http://127.0.0.1:4444/wd/hub',
+        desired_capabilities={'javascriptEnabled': True,
+                              "browserName":f"{browser_new}"},
+        options= driver_options
+    )
+    driver.get(url)
+    return Selenium(driver)
+
+def test_open_page(get_to_main_page):
+    page = get_to_main_page
+    page.click_authors_button()
+    time.sleep(2)

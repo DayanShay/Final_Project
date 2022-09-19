@@ -122,10 +122,11 @@ class Selenium(Driver):
         book_img = self.get_element(location,driver)
         return book_img.get_attribute("src")
 
-    @staticmethod
-    def get_text(self):
+    def get_text(self,element):
         return self.text
 
     def refrash_page(self):
         self._driver.refresh()
 
+    def close_page(self):
+        self._driver.quit()
