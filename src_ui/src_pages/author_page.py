@@ -12,8 +12,13 @@ class AuthorPage(Base_Page):
                   "book_details": (Meted.CLASS_NAME, "card-text"),
                   "author_name": (Meted.CLASS_NAME, "list-group"),
                   "google_map": (Meted.XPATH, '//*[@id="mapDiv"]/div/div/div[4]/div/div/div/div'),
-                  "google_frame": (Meted.ID, 'iframeId')
+                  "google_frame": (Meted.ID, 'iframeId'),
+                  "author_name_top": (Meted.CLASS_NAME, 'bg-secondary')
                   }
+
+    def get_author_name_top(self):
+        author_name_top = self._driver.get_element(self._locations["author_name_top"])
+        return author_name_top.text
 
     def get_book_container(self):
         books = self._driver.get_elements(self._locations["book-container"])

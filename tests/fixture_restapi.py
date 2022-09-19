@@ -31,7 +31,7 @@ def get_api_UnAutho():
 
 
 @pytest.fixture
-def args_from_user(pytestconfig):
+def args_from_user(pytestconfig) -> list[str]:
     url = pytestconfig.getoption("url")
     browser = pytestconfig.getoption("browse")
     path_driver = pytestconfig.getoption("path_driver")
@@ -109,7 +109,3 @@ def driver_remote(browser,url):
     driver.get(url)
     return Selenium(driver)
 
-def test_open_page(get_to_main_page):
-    page = get_to_main_page
-    page.click_authors_button()
-    time.sleep(2)

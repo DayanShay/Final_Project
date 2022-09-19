@@ -25,5 +25,6 @@ class AuthorsPage(Base_Page):
         return author_name
 
     def click_go_to_author_page(self, author):
-        self._driver.click_on_it(self._locations["to_author_page"], author)
+        to_author_page = self._driver.get_element(self._locations["to_author_page"],author)
+        self._driver.click_on_it(to_author_page)
         return AuthorPage(self._driver)
