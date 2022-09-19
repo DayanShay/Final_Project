@@ -8,13 +8,12 @@ def get_data_for_test() -> json:
     :return: json : data for tests.
     """
     try:
-        with open('.tests/test_configuration.json') as file_root:
+        with open('tests/test_configuration.json') as file_root:
             file_json_data = json.load(file_root)
-    except FileNotFoundError:
+    except :
         with open('test_configuration.json') as file_root:
             file_json_data = json.load(file_root)
-    finally:
-        return file_json_data
+    return file_json_data
 
 
 def pytest_addoption(parser):
