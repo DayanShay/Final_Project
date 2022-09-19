@@ -21,7 +21,8 @@ class AuthorsPage(Base_Page):
         return card_footer
 
     def get_author_name(self, author):
-        author_name = self._driver.get_element(self._locations["author_name"], author).text
+        author_name_location = self._driver.get_element(self._locations["author_name"], author)
+        author_name = self._driver.get_text(author_name_location)
         return author_name
 
     def click_go_to_author_page(self, author):

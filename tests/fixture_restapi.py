@@ -1,11 +1,9 @@
 from src_api.models import *
 from src_ui.src_pages import *
-from tests.store_book_api_class import Api
+from src_ui.src_drivers.book_store_api_interface import Api
 from tests.fixture_data import *
-import time
 import pytest
 import logging
-import json
 from playwright.sync_api import sync_playwright
 from src_ui.src_drivers import *
 from selenium import webdriver
@@ -142,7 +140,7 @@ def get_create_book_dto() -> CreateBookDto:
 
 def make_sesion_autho(api, user_login):
     res = api.account.post_login(data=user_login)
-    my_token = res.token if res.get("token") else ""
+    my_token = res.token if not isinstance(res, dict) else ""
     HEADERS = {'Authorization': f'Bearer {my_token}'}
     api.update_session_header(HEADERS)
     return api

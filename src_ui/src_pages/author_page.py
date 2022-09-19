@@ -18,7 +18,8 @@ class AuthorPage(Base_Page):
 
     def get_author_name_top(self):
         author_name_top = self._driver.get_element(self._locations["author_name_top"])
-        return author_name_top.text
+        author_name = self._driver.get_text(author_name_top)
+        return author_name
 
     def get_book_container(self):
         books = self._driver.get_elements(self._locations["book-container"])
@@ -33,30 +34,33 @@ class AuthorPage(Base_Page):
         return ammount_in_stock
 
     def get_book_name(self, book):
-        book_name = self._driver.get_element(self._locations["book_name"], book).text
+        book_name_location = self._driver.get_element(self._locations["book_name"], book)
+        book_name = self._driver.get_text(book_name_location)
         return book_name
 
     def get_book_details(self, book):
-        book_details = self._driver.get_element(self._locations["book_details"], book).text
+        book_details_location = self._driver.get_element(self._locations["book_details"], book)
+        book_details = self._driver.get_text(book_details_location)
         return book_details
 
     def get_book_author_name(self, book):
-        book_author_name = self._driver.get_element(self._locations["author_name"], book).text[4::1]
-        return book_author_name
+        book_author_name_location = self._driver.get_element(self._locations["author_name"], book)
+        book_author_name = self._driver.get_text(book_author_name_location)
+        return book_author_name[4::1]
 
     def get_card_footer(self, book):
-        card_footer = self._driver.get_element(self._locations["card_footer"], book).text
+        card_footer_location = self._driver.get_element(self._locations["card_footer"], book)
+        card_footer = self._driver.get_text(card_footer_location)
         return card_footer
 
     def get_home_location(self):
         google_frame = self._driver.get_element(self._locations["google_frame"])
-        self._driver.get_frame(google_frame)
-        google_map_text = self._driver.get_element(self._locations["google_map"]).text.split("\n")
+        google_map_text_location = self._driver.get_frame(google_frame,self._locations["google_map"])
+        google_map_text = google_map_text_location.split("\n")
         home_location = google_map_text[0].split(" ")
         homeLatitude = home_location[0]
         homeLongitude = home_location[1]
-        self._driver.switch_to_default()
-        return homeLatitude, homeLongitude
+        return self.convert_to_float_number(homeLatitude, homeLongitude)
 
     def convert_to_float_number(self, homeLatitude, homeLongitude):
         latitude = homeLatitude.replace("'","-").replace("°","-").replace('"',"")

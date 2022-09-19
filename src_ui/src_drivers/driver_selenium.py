@@ -94,20 +94,14 @@ class Selenium(Driver):
                 allert2.accept()
                 return text_1,text_2
 
-    def get_frame(self, location):
-        flag = True
-        i = 0
-        while flag and i < 3:
-            try:
-                WebDriverWait(self._driver, 10).until(EC.frame_to_be_available_and_switch_to_it(location))
-                flag = False
-            except TimeoutException:
-                try:
-                    WebDriverWait(self._driver, 10).until(EC.frame_to_be_available_and_switch_to_it(location))
-                    flag = False
-                except TimeoutException:
-                    flag = True
-            i += 1
+    def get_frame(self, frame,location):
+        driver = self._driver
+        WebDriverWait(driver, 30).until(EC.frame_to_be_available_and_switch_to_it(frame))
+        home_location_in_map = WebDriverWait(driver, 30).until(EC.presence_of_element_located(self.identy(location)))
+        google_map_text = self.get_text(home_location_in_map)
+        self._driver.switch_to.default_content()
+        return google_map_text
+
 
     def switch_to_default(self):
         self._driver.switch_to.default_content()

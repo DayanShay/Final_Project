@@ -23,6 +23,7 @@ class PlayWright(Driver):
             driver = self._driver
         elements = driver.query_selector_all(self.identy(location))
         if len(elements) == 0:
+            time.sleep(3)
             elements = driver.query_selector_all(self.identy(location))
             if len(elements) == 0:
                 self.refrash_page()
@@ -59,10 +60,20 @@ class PlayWright(Driver):
         self.click_on_it(element)
         return self.text1
 
+    def get_frame(self,frame, location):
+        flag = True
+        i = 0
+        while flag and i < 3:
+            try:
+                frame_text = frame.content_frame().inner_text(self.identy(location))
+            except TimeoutError:
+                self.refrash_page()
+            if frame_text == "" or None:
+                i +=1
+            else:
+                flag = False
+        return frame_text
 
-        pass
-    def get_frame(self, location):
-        pass
     def switch_to_default(self):
         pass
     def page_url(self):

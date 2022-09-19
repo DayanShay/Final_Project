@@ -22,27 +22,31 @@ class SearchPage(Base_Page):
         return books
 
     def get_book_price(self, book):
-        book_price = self.get_book_card_footer(book).split(" ")[1]
+        book_price = self.get_book_card_footer(book)[1]
         return book_price
 
     def get_ammount_in_stock_of_book(self, book):
-        ammount_in_stock = self.get_book_card_footer(book).split(" ")[5]
+        ammount_in_stock = self.get_book_card_footer(book)[5]
         return ammount_in_stock
 
     def get_book_name(self, book):
-        book_name = self._driver.get_element(self._locations["book_name"], book).text
+        book_name_location = self._driver.get_element(self._locations["book_name"], book)
+        book_name = self._driver.get_text(book_name_location)
         return book_name
 
     def get_book_details(self, book):
-        book_details = self._driver.get_element(self._locations["book_details"], book).text
+        book_details_location = self._driver.get_element(self._locations["book_details"], book)
+        book_details = self._driver.get_text(book_details_location)
         return book_details
 
     def get_book_author_name(self, book):
-        book_author_name = self._driver.get_element(self._locations["author_name"], book).text[4::1]
+        book_author_name_location = self._driver.get_element(self._locations["author_name"], book)
+        book_author_name = self._driver.get_text(book_author_name_location)[4::1]
         return book_author_name
 
     def get_book_card_footer(self, book):
-        card_footer = self._driver.get_element(self._locations["card_footer"], book).text
+        card_footer_location = self._driver.get_element(self._locations["card_footer"], book)
+        card_footer = self._driver.get_text(card_footer_location)
         return card_footer
 
     def get_author_container(self):
@@ -50,11 +54,12 @@ class SearchPage(Base_Page):
         return authors
 
     def get_card_footer(self, footer):
-        card_footer = self._driver.get_element(self._locations["card_footer"], footer)
-        return card_footer
+        card_footer_location = self._driver.get_element(self._locations["card_footer"], footer)
+        return card_footer_location.split(" ")
 
     def get_author_name(self, author):
-        author_name = self._driver.get_element(self._locations["author_name"], author).text
+        author_name_location = self._driver.get_element(self._locations["author_name"], author)
+        author_name = self._driver.get_text(author_name_location)
         return author_name
 
     def click_go_to_author_page(self, author):
