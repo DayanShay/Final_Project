@@ -1,5 +1,6 @@
 import json
-
+import pytest
+import allure
 
 def get_data_for_test() -> json:
     """
@@ -27,3 +28,26 @@ def pytest_addoption(parser):
     parser.addoption("--api_url",action="store",default=data_for_test["api_url"])
 
 
+
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
+    return rep
+
+def screenshot_if_faild(driver, request) -> None:
+    """
+    screenshot_if_faild takes a screenshot if a test faild
+    """
+
+    if request.node.rep_call.failed:
+        # Make the screen-shot if test failed:
+        try:
+            driver.execute_script("document.body.bgColor = 'white';")
+
+            allure.attach(driver.get_screenshot_as_png(),
+                          name=request.function.__name__,
+                          attachment_type=allure.attachment_type.PNG)
+        except:
+            pass  # just ignore
