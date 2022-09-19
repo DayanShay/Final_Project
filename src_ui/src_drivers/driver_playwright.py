@@ -78,5 +78,4 @@ class PlayWright(Driver):
 
     def refrash_page(self):
         self._driver.reload()
-        time.sleep(2)
 

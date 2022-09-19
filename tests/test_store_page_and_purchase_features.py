@@ -8,7 +8,7 @@ from tests.fixture_data import *
 from tests.fixture_restapi import *
 
 
-class Test_store_page_features:
+class Test_store_page_and_purchase_features:
 
     def test_check_contant_of_store_page(self, get_to_main_page, get_api_UnAutho):
         page = get_to_main_page
