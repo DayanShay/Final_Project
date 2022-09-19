@@ -28,9 +28,12 @@ class Test_authors_page_features:
         name_on_author_page = author_page.get_author_name_top()
         assert name_on_author_page == name_on_authors_page == last_author_from_api.name
 
-    def test_contant_of_authors_page_after_post(self, get_to_main_page, get_api_UnAutho):
+    def test_contant_of_authors_page_after_post(self, get_to_main_page, get_api_UnAutho, create_authors_dto,
+                                          get_create_book_dto):
+        register = make_register_account(USER_Admin)
+        user_login = make_login_account(register)
         page = get_to_main_page
-        api = get_api_UnAutho
+        api = make_sesion_autho(get_api_UnAutho, user_login)
         authors_page = page.click_authors_button()
         authors_form_web = authors_page.get_author_container()
         authors_from_api = api.authors.get_authors()

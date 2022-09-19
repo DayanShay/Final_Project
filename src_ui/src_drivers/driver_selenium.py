@@ -123,7 +123,7 @@ class Selenium(Driver):
         return book_img.get_attribute("src")
 
     def get_text(self,element):
-        return self.text
+        return element.text
 
     def refrash_page(self):
         self._driver.refresh()
