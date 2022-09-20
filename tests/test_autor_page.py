@@ -1,7 +1,7 @@
 from tests.fixture_restapi import *
 
 
-@pytest.mark.run(order=4)
+@pytest.mark.order(3)
 class Test_author_page_features:
 
     def test_author_map_locations(self, get_to_main_page, get_api_UnAutho):

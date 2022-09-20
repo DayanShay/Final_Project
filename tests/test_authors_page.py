@@ -1,7 +1,7 @@
 from tests.fixture_restapi import *
 
 
-@pytest.mark.run(order=3)
+@pytest.mark.order(2)
 class Test_authors_page_features:
 
     def test_contant_of_authors_page(self, get_to_main_page, get_api_UnAutho):

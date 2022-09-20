@@ -1,6 +1,6 @@
 from src_api.models import *
 from src_ui.src_pages import *
-from src_ui.src_drivers.book_store_api_interface import Api
+from tests import screenshot_if_faild
 from tests.fixture_data import *
 import pytest
 import logging
@@ -36,20 +36,21 @@ def get_base_url(pytestconfig):
 
 
 @pytest.fixture
-def make_driver(args_from_user) -> Driver:
+def make_driver(args_from_user,request) -> Driver:
     url, browser, path_driver, sys_use, remote, remote_url = args_from_user
     if not remote:
         if sys_use == "selenium":
             driver = selenium_driver_operator(url, browser, path_driver)
             yield driver
+            screenshot_if_faild(driver, request,sys_use)
             driver.close_page()
         elif sys_use == "playwright":
             playwright = playwright_driver_operator(url, browser)
             driver = playwright[0]
             yield driver
+            screenshot_if_faild(driver, request,sys_use)
             driver.close_page()
             PW = playwright[1]
-            driver.close_page()
             PW.stop()
     else:
         driver = driver_remote(browser, url, remote_url)

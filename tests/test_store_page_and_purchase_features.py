@@ -1,7 +1,7 @@
 from tests.fixture_restapi import *
 
 
-@pytest.mark.run(order=2)
+@pytest.mark.order(1)
 class Test_store_page_and_purchase_features:
 
     def test_check_contant_of_store_page(self, get_to_main_page, get_api_UnAutho):

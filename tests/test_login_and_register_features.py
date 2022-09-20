@@ -8,7 +8,7 @@ from tests.fixture_data import *
 from tests.fixture_restapi import *
 
 
-@pytest.mark.run(order=1)
+@pytest.mark.order(0)
 class Test_login_and_register_features:
 
     @pytest.mark.parametrize("test_input,expected", [(USER_no_email_and_no_pass, Invalid_msg),

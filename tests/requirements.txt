@@ -38,3 +38,4 @@ websocket-client~=1.4.1
 websockets~=10.1
 wheel~=0.37.1
 wsproto~=1.2.0
+pytest-order~=1.0.1
