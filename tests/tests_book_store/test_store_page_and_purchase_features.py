@@ -1,5 +1,6 @@
-from tests.fixture_restapi import *
-
+from tests.functions_and_fixtures.fixtures import *
+from tests.functions_and_fixtures.fixture_data import *
+from tests.functions_and_fixtures.functions import *
 
 @pytest.mark.order(1)
 class Test_store_page_and_purchase_features:

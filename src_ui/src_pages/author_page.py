@@ -1,5 +1,3 @@
-import time
-
 from src_ui.src_pages.base_page import Base_Page
 from src_ui.src_drivers.driver_config import Meted, Driver
 
@@ -58,7 +56,7 @@ class AuthorPage(Base_Page):
 
     def get_home_location(self):
         google_frame = self._driver.get_element(self._locations["google_frame"])
-        google_map_text_location = self._driver.get_frame(google_frame, self._locations["google_map"])
+        google_map_text_location = self._driver.get_frame(google_frame,self._locations["google_map"])
         google_map_text = google_map_text_location.split("\n")
         home_location = google_map_text[0].split(" ")
         homeLatitude = home_location[0]

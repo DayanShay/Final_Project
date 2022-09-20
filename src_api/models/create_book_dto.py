@@ -11,5 +11,4 @@ class CreateBookDto(Base_Obj):
     authorId: int
     description: str = True
 
-    def __post_init__(self):
-        pass
+

@@ -13,5 +13,3 @@ class BookDto(Base_Obj):
     imageUrl: str
     authorId: int
 
-    def __post_init__(self):
-        pass

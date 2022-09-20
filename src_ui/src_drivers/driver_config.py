@@ -1,18 +1,16 @@
 from abc import ABC, abstractmethod
 
-from selenium.webdriver.chrome.webdriver import WebDriver
-
 
 class Driver(ABC):
     """
     abstractmethod for creating driver
     """
 
-    def __init__(self, driver:WebDriver):
+    def __init__(self, driver):
         self._driver = driver
 
     @abstractmethod
-    def get_element(self, location,driver=None, wait: int = 5):
+    def get_element(self, location,driver=None):
         pass
 
     @abstractmethod
@@ -24,7 +22,7 @@ class Driver(ABC):
         pass
 
     @abstractmethod
-    def send_keys_to(self, location, text):
+    def send_keys_to(self, location, text=""):
         pass
 
     @abstractmethod
@@ -42,7 +40,7 @@ class Driver(ABC):
     def get_text(self,element):
         pass
     @abstractmethod
-    def get_book_img(self,book):
+    def get_book_img(self,location,book):
         pass
     @abstractmethod
     def refrash_page(self):
@@ -55,6 +53,10 @@ class Driver(ABC):
     def get_screen_shoot(self):
         pass
 
+    def get_frame(self, google_frame,location):
+        pass
+
+
 class Meted:
     ID = "ID"
     NAME = "NAME"
@@ -63,4 +65,3 @@ class Meted:
     CLASS_NAME = "CLASS_NAME"
     XPATH = "XPATH"
     CSS_SELECTOR = "CSS_SELECTOR"
-    PARTIAL_LINK_TEXT = "PARTIAL_LINK_TEXT"

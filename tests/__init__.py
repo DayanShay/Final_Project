@@ -1,1 +1,11 @@
-from .screenshot_if_faild import screenshot_if_faild
+from .functions_and_fixtures import fixtures
+from .functions_and_fixtures import functions
+from .functions_and_fixtures import screenshot_if_faild
+from .functions_and_fixtures import fixture_data
+
+
+from .tests_book_store import test_author_page, conftest
+from .tests_book_store import test_authors_page
+from .tests_book_store import test_login_and_register_features
+from .tests_book_store import test_search_page
+from .tests_book_store import test_store_page_and_purchase_features

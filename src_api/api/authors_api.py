@@ -18,31 +18,31 @@ class Authors_Api(BaseApi):
             for author in response.json():
                 authors.append(GetAuthorDto(**author))
             return authors
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Authors", action="post")
     def post_authors(self,response):
         if response.ok:
             return Author(**response.json())
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
     @BaseApi.make_a_req(url=f"api/Authors/",action="get",param="id")
     def get_authors_by_id(self, response):
         if response.ok:
             return AuthorDto(**response.json())
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
     @BaseApi.make_a_req(url=f"api/Authors/",action="put",param="id")
     def put_authors_by_id(self, response):
         if response.ok:
             return None
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
     @BaseApi.make_a_req(url=f"api/Authors/",action="delete",param="id")
     def delete_authors_by_id(self, response):
         if response.ok:
             return response.reason
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
 
     @BaseApi.make_a_req(url=f"api/Authors/search/",action="get",param='text')
@@ -52,7 +52,7 @@ class Authors_Api(BaseApi):
             for author in response.json():
                 authors.append(GetAuthorDto(**author))
             return authors
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
 
 

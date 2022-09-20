@@ -1,4 +1,3 @@
-import time
 from src_ui.src_pages.base_page import Base_Page
 from src_ui.src_drivers.driver_config import Meted, Driver
 
@@ -57,6 +56,5 @@ class StorePage(Base_Page):
         return card_footer[:-8:1]
 
     def get_book_container(self):
-        time.sleep(3)
         books = self._driver.get_elements(self._locations["book-container"])
         return books

@@ -1,5 +1,5 @@
-
 import allure
+
 
 def screenshot_if_faild(driver, request) -> None:
     """

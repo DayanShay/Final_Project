@@ -9,5 +9,3 @@ class ApiUserDto(Base_Obj):
     firstName: str
     lastName: str
 
-    def __post_init__(self):
-        pass

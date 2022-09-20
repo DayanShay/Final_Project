@@ -1,11 +1,6 @@
-import json
-import time
-
-import pytest
-import logging
-from src_api.models import *
-from tests.fixture_data import *
-from tests.fixture_restapi import *
+from tests.functions_and_fixtures.fixtures import *
+from tests.functions_and_fixtures.fixture_data import *
+from tests.functions_and_fixtures.functions import *
 
 
 @pytest.mark.order(0)
@@ -25,7 +20,8 @@ class Test_login_and_register_features:
                                                      (USER_withemail_invalid_low_password, [Invalid_password_msg]),
                                                      (USER_withemail_invalid_high_password, [Invalid_password_msg])
                                                      ])
-    def test_register_on_Api_with_Invalid_data(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict, expected):
+    def test_register_on_Api_with_Invalid_data(self, get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict,
+                                               expected):
         api = get_api_UnAutho
         invalid_register_user = make_register_account(test_input)
         res_register_invalid = api.account.post_account(data=invalid_register_user)
@@ -40,6 +36,7 @@ class Test_login_and_register_features:
         page.click_log_in()
         store_page = page.make_login(invalid_login_user)
         assert store_page.get_page_url() == get_base_url
+
     @pytest.mark.parametrize("test_input,expected", [(USER_no_email_and_no_pass, Invalid_msg),
                                                      (USER_invalid_email_and_no_pass,
                                                       [Invalid_email_msg, Invalid_password_msg,
@@ -54,7 +51,8 @@ class Test_login_and_register_features:
                                                      (USER_withemail_invalid_low_password, [Invalid_password_msg]),
                                                      (USER_withemail_invalid_high_password, [Invalid_password_msg])
                                                      ])
-    def test_register_on_Website_with_Invalid_data(self,get_base_url, get_to_main_page, get_api_UnAutho, expected, test_input: dict):
+    def test_register_on_Website_with_Invalid_data(self, get_base_url, get_to_main_page, get_api_UnAutho, expected,
+                                                   test_input: dict):
         page = get_to_main_page
         page.click_log_in()
 
@@ -71,8 +69,9 @@ class Test_login_and_register_features:
         for msg in expected:
             assert msg in res_login_invalid["msg"]
 
-    @pytest.mark.parametrize("test_input", [(USER_Admin)])
-    def test_register_on_Website_with_Adminuser(self,get_base_url, get_to_main_page, get_api_UnAutho, test_input: dict):
+    @pytest.mark.parametrize("test_input", [USER_Admin])
+    def test_register_on_Website_with_Adminuser(self, get_base_url, get_to_main_page, get_api_UnAutho,
+                                                test_input: dict):
         page = get_to_main_page
         page.click_log_in()
         register_user = make_register_account(test_input)
@@ -87,8 +86,8 @@ class Test_login_and_register_features:
         assert store_page.get_page_url() == f"{get_base_url}store"
         assert res_login.token is not None
 
-    @pytest.mark.parametrize("test_input", [(USER_testuser)])
-    def test_register_on_Website_with_Testuser(self,get_base_url, get_to_main_page, get_api_UnAutho, test_input: dict):
+    @pytest.mark.parametrize("test_input", [USER_testuser])
+    def test_register_on_Website_with_Testuser(self, get_base_url, get_to_main_page, get_api_UnAutho, test_input: dict):
         page = get_to_main_page
         page.click_log_in()
         register_user = make_register_account(test_input)
@@ -103,8 +102,9 @@ class Test_login_and_register_features:
         assert store_page.get_page_url() == f"{get_base_url}store"
         assert res_login.token is not None
 
-    @pytest.mark.parametrize("test_input", [(USER_Admin)])
-    def test_register_on_API_with_valid_Adminuser(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
+    @pytest.mark.parametrize("test_input", [USER_Admin])
+    def test_register_on_API_with_valid_Adminuser(self, get_base_url, get_api_UnAutho, get_to_main_page,
+                                                  test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
         res_register1 = api.account.post_account(data=register_user)
@@ -118,7 +118,8 @@ class Test_login_and_register_features:
         assert store_page.get_page_url() == f"{get_base_url}store"
 
     @pytest.mark.parametrize("test_input", [(USER_testuser)])
-    def test_register_on_Website_with_valid_Testuser(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
+    def test_register_on_Website_with_valid_Testuser(self, get_base_url, get_api_UnAutho, get_to_main_page,
+                                                     test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
         res_register1 = api.account.post_account(data=register_user)
@@ -132,8 +133,8 @@ class Test_login_and_register_features:
         store_page = page.make_login(login_user)
         assert store_page.get_page_url() == f"{get_base_url}store"
 
-    @pytest.mark.parametrize("test_input", [(USER_testuser), (USER_Admin)])
-    def test_register_Dup_accounts_on_API(self,get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
+    @pytest.mark.parametrize("test_input", [USER_testuser, USER_Admin])
+    def test_register_Dup_accounts_on_API(self, get_base_url, get_api_UnAutho, get_to_main_page, test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
         res_register1 = api.account.post_account(data=register_user)
@@ -147,5 +148,3 @@ class Test_login_and_register_features:
         store_page = page.make_login(login_user)
         assert store_page.get_page_url() == f"{get_base_url}store"
 
-    def make_dup_user_msg(self, email):
-        return '{"DuplicateUserName":' + f'["Username \'{email}\' is already taken."]'"}"

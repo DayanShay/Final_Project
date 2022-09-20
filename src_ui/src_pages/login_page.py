@@ -17,10 +17,10 @@ class LoginPage(Base_Page):
 
 
     def fill_email(self,text):
-        self._driver.send_keys_to(self.locations["Email_box"],text=text)
+        self._driver.send_keys_to(self.locations["Email_box"], text=text)
 
     def fill_password(self,text):
-        self._driver.send_keys_to(self.locations["Password_box"],text=text)
+        self._driver.send_keys_to(self.locations["Password_box"], text=text)
 
     def click_submit(self):
         Submit_button = self._driver.get_element(self.locations["Submit_button"])
@@ -35,10 +35,10 @@ class LoginPage(Base_Page):
         self._driver.click_on_it(register_btn)
 
     def fill_first_name(self,text):
-        self._driver.send_keys_to(self.locations["FirstName_box"],text=text)
+        self._driver.send_keys_to(self.locations["FirstName_box"], text=text)
 
     def fill_last_name(self,text):
-        self._driver.send_keys_to(self.locations["LastName_box"],text=text)
+        self._driver.send_keys_to(self.locations["LastName_box"], text=text)
 
     def make_register(self,user:ApiUserDto):
         self.click_register()

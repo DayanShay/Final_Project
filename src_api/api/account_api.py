@@ -13,18 +13,18 @@ class Account_Api(BaseApi):
     def post_account(self,response):
         if response.ok:
             return response.reason
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Account/login", action="post")
     def post_login(self, response) -> AuthResponseDto:
         if response.ok:
             return AuthResponseDto(**response.json())
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
     @BaseApi.make_a_req(url="api/Account/refreshtoken", action="post")
     def post_refresh_token(self, response):
         if response.ok:
             return AuthResponseDto(**response.json())
-        return API_Func.res_dict(response.status_code, response.text)
+        return API_Func.bad_respone_msg(response.status_code, response.text)
 
 

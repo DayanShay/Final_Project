@@ -1,5 +1,6 @@
 import json
 
+
 class Base_Obj:
     def __init__(self):
         pass
@@ -16,4 +17,3 @@ class Base_Obj:
 
     def __str__(self):
         return json.dumps(self.to_json())
-

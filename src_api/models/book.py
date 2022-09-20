@@ -12,7 +12,10 @@ class Book(Base_Obj):
     amountInStock: int
     imageUrl: str
     authorId: int
-    author : Author
+    author: Author = None
 
     def __post_init__(self):
-        pass
+        if self.author is not None:
+            author = Author(*self.author)
+        self.author = author
+

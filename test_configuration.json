@@ -5,6 +5,5 @@
   "remote_url":"http://127.0.0.1:4444/wd/hub",
   "remote": false,
   "sys_use": "playwright",
-  "browse": "Chrome",
-  "path_driver": "C:\\Users\\shaye\\Downloads\\chromedriver_win32\\chromedriver.exe"
+  "browse": "Firefox"
 }
