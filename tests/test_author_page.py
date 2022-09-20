@@ -1,6 +1,6 @@
-from tests.functions_and_fixtures.fixtures import *
-from tests.functions_and_fixtures.fixture_data import *
-from tests.functions_and_fixtures.functions import *
+from functions_and_fixtures.fixtures import *
+from functions_and_fixtures.fixture_data import *
+from functions_and_fixtures.functions import *
 
 @pytest.mark.order(3)
 class Test_author_page_features:

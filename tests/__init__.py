@@ -1,11 +1,5 @@
-from .functions_and_fixtures import fixtures
-from .functions_and_fixtures import functions
-from .functions_and_fixtures import screenshot_if_faild
-from .functions_and_fixtures import fixture_data
-
-
-from .tests_book_store import test_author_page, conftest
-from .tests_book_store import test_authors_page
-from .tests_book_store import test_login_and_register_features
-from .tests_book_store import test_search_page
-from .tests_book_store import test_store_page_and_purchase_features
+from .test_login_and_register_features import Test_login_and_register_features
+from .test_store_page_and_purchase_features import Test_store_page_and_purchase_features
+from .test_search_page import Test_search_page_features
+from .test_authors_page import Test_authors_page_features
+from .test_author_page import Test_author_page_features

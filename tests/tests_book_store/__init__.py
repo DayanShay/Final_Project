@@ -1,5 +1,0 @@
-from .test_login_and_register_features import Test_login_and_register_features
-from .test_store_page_and_purchase_features import Test_store_page_and_purchase_features
-from .test_search_page import Test_search_page_features
-from .test_authors_page import Test_authors_page_features
-from .test_author_page import Test_author_page_features

@@ -3,14 +3,14 @@ import pytest
 
 def get_data_for_test() -> json:
     """
-    preparing data for the tests from json file.
-    :return: json : data for tests.
+    preparing data for the tests2 from json file.
+    :return: json : data for tests2.
     """
     try:
-        with open('tests/test_configuration.json') as file_root:
+        with open('/test_configuration.json') as file_root:
             file_json_data = json.load(file_root)
     except :
-        with open('../../test_configuration.json') as file_root:
+        with open('test_configuration.json') as file_root:
             file_json_data = json.load(file_root)
     return file_json_data
 

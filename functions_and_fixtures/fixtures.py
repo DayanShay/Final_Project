@@ -3,8 +3,8 @@ import logging
 from src_api.models import *
 from src_ui.src_drivers import *
 from src_ui.src_pages import *
-from tests.functions_and_fixtures.screenshot_if_faild import *
-from tests.functions_and_fixtures.fixture_data import *
+from functions_and_fixtures.screenshot_if_faild import *
+from functions_and_fixtures.fixture_data import *
 
 LOGGER = logging.getLogger(__name__)
 
@@ -13,9 +13,9 @@ LOGGER = logging.getLogger(__name__)
 @pytest.fixture(scope='class')
 def get_api_UnAutho(pytestconfig):
     api_url = pytestconfig.getoption("api_url")
-    LOGGER.info("Start tests")
+    LOGGER.info("Start tests2")
     yield Api(api_url, HEADERS)
-    LOGGER.info("Finish tests")
+    LOGGER.info("Finish tests2")
 
 
 @pytest.fixture
