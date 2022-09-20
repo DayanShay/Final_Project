@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from src_api.models.base_obj import Base_Obj
-from src_api.models.book_dto import BookDto
+from src_api.models.book import Book
 
 
 @dataclass
@@ -12,6 +12,8 @@ class AuthorDto(Base_Obj):
     books : list = True
 
     def __post_init__(self):
-        pass
-
+        books = []
+        for book in self.books:
+            books.append(Book(**book))
+        self.books = books
 

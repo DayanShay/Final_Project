@@ -17,16 +17,6 @@ class StorePage(Base_Page):
 
 
 
-    # def get_book_title(self,book):
-    #     self._driver.get_element("title location",book)
-    #
-    # def get_book_by_title(self,title):
-    #     books = self.get_book_container()
-    #     for book in books:
-    #         if self.get_book_title(book) == title:
-    #             return book
-    #     return None
-
     def click_buy(self, book):
         cart_footer = self._driver.get_element(self._locations["card_footer"],book)
         buy_button = self._driver.get_element(self._locations["buy"],cart_footer)

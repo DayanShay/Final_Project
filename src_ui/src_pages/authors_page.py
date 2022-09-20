@@ -1,3 +1,5 @@
+import time
+
 from src_ui.src_pages.author_page import AuthorPage
 from src_ui.src_pages.base_page import Base_Page
 from src_ui.src_drivers.driver_config import Meted, Driver

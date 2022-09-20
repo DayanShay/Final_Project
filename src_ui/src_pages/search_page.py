@@ -15,6 +15,7 @@ class SearchPage(Base_Page):
                   "author_container": (Meted.CLASS_NAME, "author-container"),
                   "author_book_name": (Meted.CLASS_NAME, "list-group-item"),
                   "to_author_page": (Meted.TAG_NAME, "button"),
+                  "book_img": (Meted.CLASS_NAME, "card-img-top")
                   }
 
     def get_book_container(self):
@@ -65,3 +66,8 @@ class SearchPage(Base_Page):
     def click_go_to_author_page(self, author):
         self._driver.click_on_it(self._locations["to_author_page"], author)
         return AuthorPage(self._driver)
+
+
+    def get_book_img(self,book):
+        book_img = self._driver.get_book_img(self._locations["book_img"],book)
+        return book_img

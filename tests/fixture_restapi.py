@@ -10,6 +10,23 @@ from selenium import webdriver
 
 LOGGER = logging.getLogger(__name__)
 
+def convert_to_bookDto(book):
+    amountInStock = book.amountInStock
+    authorId = book.authorId
+    description = book.description
+    id = book.id
+    imageUrl = book.imageUrl
+    name = book.name
+    price = book.price
+    return BookDto(id = id,
+                   amountInStock=amountInStock,
+                   authorId=authorId,
+                   description=description,
+                   imageUrl=imageUrl,
+                   name=name,
+                   price=price)
+
+
 
 @pytest.fixture(scope='class')
 def get_api_UnAutho(pytestconfig):
