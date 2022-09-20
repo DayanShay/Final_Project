@@ -40,7 +40,7 @@ class Test_login_and_register_features:
         page.click_log_in()
         store_page = page.make_login(invalid_login_user)
         assert store_page.get_page_url() == get_base_url
-
+        assert False
     @pytest.mark.parametrize("test_input,expected", [(USER_no_email_and_no_pass, Invalid_msg),
                                                      (USER_invalid_email_and_no_pass,
                                                       [Invalid_email_msg, Invalid_password_msg,

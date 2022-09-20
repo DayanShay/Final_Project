@@ -1,6 +1,6 @@
 from src_api.models import *
 from src_ui.src_pages import *
-from tests import screenshot_if_faild
+from tests import *
 from tests.fixture_data import *
 import pytest
 import logging
@@ -29,6 +29,7 @@ def args_from_user(pytestconfig) -> list[str]:
     remote_url = pytestconfig.getoption("remote_url")
     return url, browser, path_driver, sys_use, remote, remote_url
 
+
 @pytest.fixture
 def get_base_url(pytestconfig):
     url = pytestconfig.getoption("url")
@@ -36,19 +37,19 @@ def get_base_url(pytestconfig):
 
 
 @pytest.fixture
-def make_driver(args_from_user,request) -> Driver:
+def make_driver(args_from_user, request) -> Driver:
     url, browser, path_driver, sys_use, remote, remote_url = args_from_user
     if not remote:
         if sys_use == "selenium":
             driver = selenium_driver_operator(url, browser, path_driver)
             yield driver
-            screenshot_if_faild(driver, request,sys_use)
+            screenshot_if_faild(driver, request)
             driver.close_page()
         elif sys_use == "playwright":
             playwright = playwright_driver_operator(url, browser)
             driver = playwright[0]
             yield driver
-            screenshot_if_faild(driver, request,sys_use)
+            screenshot_if_faild(driver, request)
             driver.close_page()
             PW = playwright[1]
             PW.stop()
@@ -167,3 +168,7 @@ def delete_all_authors_and_books_created(api_from_test):
     for book in books:
         if book.id > 6:
             api.books.delete_books_by_id(id=str(book.id))
+
+
+
+

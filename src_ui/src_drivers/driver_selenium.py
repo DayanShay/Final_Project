@@ -124,3 +124,7 @@ class Selenium(Driver):
 
     def close_page(self):
         self._driver.quit()
+
+    def get_screen_shoot(self):
+        pic  = self._driver.get_screenshot_as_png()
+        return pic

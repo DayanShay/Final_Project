@@ -51,6 +51,10 @@ class Driver(ABC):
     def close_page(self):
         pass
 
+    @abstractmethod
+    def get_screen_shoot(self):
+        pass
+
 class Meted:
     ID = "ID"
     NAME = "NAME"

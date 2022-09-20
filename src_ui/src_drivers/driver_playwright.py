@@ -1,3 +1,4 @@
+import os
 import time
 
 from playwright.sync_api import Page
@@ -56,9 +57,12 @@ class PlayWright(Driver):
         def handle_dialog(dialog):
             dialog.accept()
             self.text1.append(dialog.message)
+
         self._driver.on("dialog", handle_dialog)
         self.click_on_it(element)
-        return self.text1
+        text = self.text1
+        self.text1 = []
+        return text
 
     def get_frame(self,frame, location):
         flag = True
@@ -91,3 +95,8 @@ class PlayWright(Driver):
     def close_page(self):
         self._driver.close()
 
+    def get_screen_shoot(self):
+        pic_name = f"img.png"
+        pic = self._driver.screenshot(path=fr"{pic_name}")
+        os.remove(pic_name)
+        return pic

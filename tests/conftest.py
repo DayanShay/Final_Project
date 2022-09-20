@@ -1,6 +1,5 @@
 import json
 import pytest
-import allure
 
 def get_data_for_test() -> json:
     """

@@ -1,1 +1,1 @@
-from .take_photo_if_fail import screenshot_if_faild
+from .screenshot_if_faild import screenshot_if_faild
