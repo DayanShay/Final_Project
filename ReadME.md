@@ -113,6 +113,7 @@ File = ".Final_Project\test_configuration.json"
 
 To run with allure report : 
 
+Allure will take a Pic if a Test is Faild. 
 
 
 ```commandline
