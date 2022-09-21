@@ -16,10 +16,6 @@ USE !
 pip install -r "FullPath\Final_Project\requirements.txt"
 ```
 
-Edit Configuration for tests :
-
-![image](https://user-images.githubusercontent.com/108628136/191582056-0d55d543-a373-44a2-bd1e-a8bcc7bd311a.png)
-
 For Remote : Run before Executing the tests
 
 Needed - Selenium Grid
@@ -79,6 +75,9 @@ RestAPI can be found :
 ```URL
 http://localhost:7017/swagger/index.html
 ```
+Edit Configuration for tests :
+
+![image](https://user-images.githubusercontent.com/108628136/191582056-0d55d543-a373-44a2-bd1e-a8bcc7bd311a.png)
 
 
 How To run the tests : 
@@ -88,11 +87,17 @@ How To run the tests :
 pytest --options "args"  .\tests_book_store\  
 ```
 --url = Website URL .
+
 --api_url = RestApi Url .
---remote_url = Selenium Grid - Do not Touch .
+
+--remote_url = Selenium Grid - URL.
+
 --remote = false or True, Works only with Selenium.
+
 --sys_use = "selenium" or "playwright".
+
 --browse = "Chrome" or "Firefox" Supports only this for now.
+
 
 Or 
 
