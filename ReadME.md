@@ -17,8 +17,8 @@ pip install -r "FullPath\Final_Project\requirements.txt"
 ```
 
 Edit Configuration for tests :
-![img.png](img.png)
 
+![image](https://user-images.githubusercontent.com/108628136/191582056-0d55d543-a373-44a2-bd1e-a8bcc7bd311a.png)
 
 For Remote : Run before Executing the tests
 
