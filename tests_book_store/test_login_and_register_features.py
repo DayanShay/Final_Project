@@ -24,7 +24,7 @@ class Test_login_and_register_features:
         api = get_api_UnAutho
         invalid_register_user = make_register_account(test_input)
         res_register_invalid = api.account.post_account(data=invalid_register_user)
-        assert res_register_invalid["code"] == 404
+        assert res_register_invalid["code"] == 400
         for msg in expected:
             assert msg in res_register_invalid["msg"]
         invalid_login_user = make_login_account(invalid_register_user)
