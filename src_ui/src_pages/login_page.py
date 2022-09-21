@@ -1,4 +1,4 @@
-from src_api.models import LoginDto, ApiUserDto
+from src_api.obj_models import LoginDto, ApiUserDto
 from src_ui.src_drivers.driver_config import Meted, Driver
 from src_ui.src_pages.base_page import Base_Page
 

@@ -4,7 +4,6 @@ from functions_and_fixtures.functions import *
 
 @pytest.mark.order(2)
 class Test_authors_page_features:
-
     def test_contant_of_authors_page(self, get_to_main_page, get_api_UnAutho):
         page = get_to_main_page
         api = get_api_UnAutho
@@ -37,7 +36,7 @@ class Test_authors_page_features:
         user_login = make_login_account(register)
         api = make_sesion_autho(get_api_UnAutho, user_login)
         author = create_authors_dto
-        res_post_author = api.authors.post_authors(data=author)
+        api.authors.post_authors(data=author)
         authors_page = page.click_authors_button()
         authors_page.page_refrash()
         authors_from_web = authors_page.get_author_container()
@@ -54,7 +53,7 @@ class Test_authors_page_features:
         authors_from_api = api.authors.get_authors()
         last_author_from_api = authors_from_api[-1]
         last_author_from_api.name = "Sela Incorporation"
-        res_put_author = api.authors.put_authors_by_id(data=last_author_from_api, id=last_author_from_api.id)
+        api.authors.put_authors_by_id(data=last_author_from_api, id=last_author_from_api.id)
         page = get_to_main_page
         authors_page = page.click_authors_button()
         authors_page.page_refrash()
@@ -75,7 +74,7 @@ class Test_authors_page_features:
         authors_page = page.click_authors_button()
         authors_from_web_before = authors_page.get_author_container()
         last_author_from_web_before = authors_from_web_before[-1]
-        res_delete = api.authors.delete_authors_by_id(id=last_author_from_api.id)
+        api.authors.delete_authors_by_id(id=last_author_from_api.id)
         authors_page.page_refrash()
         authors_from_web_after = authors_page.get_author_container()
         last_author_from_web_after = authors_from_web_after[-1]

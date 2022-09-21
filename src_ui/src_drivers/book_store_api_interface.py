@@ -1,5 +1,5 @@
 import requests
-from src_api.api import *
+from src_api.api_models import *
 
 class Api():
     def __init__(self, url: str, headers):

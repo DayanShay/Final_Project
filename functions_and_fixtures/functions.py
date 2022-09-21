@@ -1,14 +1,14 @@
-from src_api.models import *
+from src_api.obj_models import *
 
 
 def convert_to_bookDto(book):
-    amountInStock = book.amountInStock
-    authorId = book.authorId
-    description = book.description
-    id = book.id
-    imageUrl = book.imageUrl
-    name = book.name
-    price = book.price
+    amountInStock = book["amountInStock"]
+    authorId = book["authorId"]
+    description = book["description"]
+    id = book["id"]
+    imageUrl = book["imageUrl"]
+    name = book["name"]
+    price = book["price"]
     return BookDto(id=id,
                    amountInStock=amountInStock,
                    authorId=authorId,

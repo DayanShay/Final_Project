@@ -16,15 +16,25 @@ class Selenium(Driver):
     def get_element(self, location: tuple[[], str], driver: [] = None, wait: int = 30):
         if driver is None:
             driver = self._driver
-        element = WebDriverWait(driver, wait).until(EC.presence_of_element_located(self.identy(location)))
+        try:
+            element = WebDriverWait(driver, wait).until(EC.presence_of_element_located(self.identy(location)))
+        except TimeoutException:
+            self.refrash_page()
+            temp_element = WebDriverWait(driver, wait).until(EC.presence_of_element_located(self.identy(location)))
+            return temp_element
         return element
 
     def get_elements(self, location: tuple[[], str], driver: [] = None, wait: int = 30):
         if driver is None:
             driver = self._driver
-        elements = WebDriverWait(driver, wait).until(EC.presence_of_all_elements_located(self.identy(location)))
-        elements_temp = WebDriverWait(driver, wait).until(EC.presence_of_all_elements_located(self.identy(location)))
-        return elements_temp if len(elements) <= len(elements_temp) else elements
+        try:
+            elements = WebDriverWait(driver, wait).until(EC.presence_of_all_elements_located(self.identy(location)))
+        except TimeoutException:
+            try:
+                elements = WebDriverWait(driver, wait).until(EC.presence_of_all_elements_located(self.identy(location)))
+            except TimeoutException:
+                return []
+        return elements
 
     def click_on_it(self, element):
         try:

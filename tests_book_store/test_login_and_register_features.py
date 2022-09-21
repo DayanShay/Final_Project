@@ -5,7 +5,6 @@ from functions_and_fixtures.functions import *
 
 @pytest.mark.order(0)
 class Test_login_and_register_features:
-
     @pytest.mark.parametrize("test_input,expected", [(USER_no_email_and_no_pass, Invalid_msg),
                                                      (USER_invalid_email_and_no_pass,
                                                       [Invalid_email_msg, Invalid_password_msg,
@@ -55,7 +54,6 @@ class Test_login_and_register_features:
                                                    test_input: dict):
         page = get_to_main_page
         page.click_log_in()
-
         register_user = make_register_account(test_input)
         login_user = make_login_account(register_user)
         page.make_register(register_user)
@@ -117,8 +115,8 @@ class Test_login_and_register_features:
         store_page = page.make_login(login_user)
         assert store_page.get_page_url() == f"{get_base_url}store"
 
-    @pytest.mark.parametrize("test_input", [(USER_testuser)])
-    def test_register_on_Website_with_valid_Testuser(self, get_base_url, get_api_UnAutho, get_to_main_page,
+    @pytest.mark.parametrize("test_input", [USER_testuser])
+    def test_register_on_API_with_Testuser(self, get_base_url, get_api_UnAutho, get_to_main_page,
                                                      test_input: dict):
         api = get_api_UnAutho
         register_user = make_register_account(test_input)
@@ -128,8 +126,8 @@ class Test_login_and_register_features:
         res_login = api.account.post_login(data=login_user)
         assert res_login.token is not None
         page = get_to_main_page
+        page.make_register(register_user)
         page.click_log_in()
-
         store_page = page.make_login(login_user)
         assert store_page.get_page_url() == f"{get_base_url}store"
 

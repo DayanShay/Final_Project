@@ -4,6 +4,6 @@
   "api_url": "http://localhost:7017/",
   "remote_url":"http://127.0.0.1:4444/wd/hub",
   "remote": false,
-  "sys_use": "playwright",
-  "browse": "Firefox"
+  "sys_use": "selenium",
+  "browse": "Chrome"
 }

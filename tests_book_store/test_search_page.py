@@ -4,6 +4,7 @@ from functions_and_fixtures.functions import *
 
 @pytest.mark.order(4)
 class Test_search_page_features:
+
     def test_search_empty_text(self,get_to_main_page,get_base_url):
         page = get_to_main_page
         api = get_api_UnAutho
@@ -44,7 +45,7 @@ class Test_search_page_features:
         assert author_name == res_post_author.name
         assert page_url == f"{get_base_url}search"
 
-    def test_search_by_author_name_twice_clicked(self,get_to_main_page,get_api_UnAutho,create_authors_dto,get_base_url):
+    def test_search_by_author_name_after_post_search_twice_clicked(self,get_to_main_page,get_api_UnAutho,create_authors_dto,get_base_url):
         register = make_register_account(USER_Admin)
         user_login = make_login_account(register)
         api = make_sesion_autho(get_api_UnAutho, user_login)
@@ -62,4 +63,3 @@ class Test_search_page_features:
         assert author_name == author.name
         assert len(books_web) == 0
         assert page_url == f"{get_base_url}search"
-        delete_all_authors_and_books_created(api)

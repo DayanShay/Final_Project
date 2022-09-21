@@ -1,6 +1,6 @@
 import pytest
 import logging
-from src_api.models import *
+from src_api.obj_models import *
 from src_ui.src_drivers import *
 from src_ui.src_pages import *
 from functions_and_fixtures.screenshot_if_faild import *

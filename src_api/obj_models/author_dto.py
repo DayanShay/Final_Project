@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from src_api.models.base_obj import Base_Obj
-from src_api.models.book_dto import BookDto
+from src_api.obj_models.base_obj import Base_Obj
+from src_api.obj_models.book_dto import BookDto
 
 
 @dataclass

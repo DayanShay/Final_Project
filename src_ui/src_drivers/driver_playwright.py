@@ -1,4 +1,6 @@
 import os
+import time
+
 from playwright.sync_api import Page
 from src_ui.src_drivers.driver_config import Driver
 
@@ -19,8 +21,9 @@ class PlayWright(Driver):
         if driver is None:
             driver = self._driver
         elements = driver.query_selector_all(self.identy(location))
+        time.sleep(2)
         temp_elements = driver.query_selector_all(self.identy(location))
-        return temp_elements if len(elements) <= len(temp_elements) else temp_elements
+        return temp_elements if len(elements) < len(temp_elements) else temp_elements
 
     def click_on_it(self, element):
         element.click()

@@ -1,3 +1,5 @@
+import time
+
 from src_ui.src_drivers.driver_config import Meted, Driver
 
 
@@ -50,7 +52,9 @@ class Base_Page:
 
 
     def get_page_url(self):
-        return self._driver.page_url()
+        time.sleep(1)
+        current_url = self._driver.page_url()
+        return current_url
 
     def page_refrash(self):
         self._driver.refrash_page()

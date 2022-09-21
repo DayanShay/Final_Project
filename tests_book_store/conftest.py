@@ -1,18 +1,17 @@
 import json
 import pytest
+import os
 
 def get_data_for_test() -> json:
     """
     preparing data for the tests2 from json file.
     :return: json : data for tests2.
     """
-    try:
-        with open('/test_configuration.json') as file_root:
-            file_json_data = json.load(file_root)
-    except :
-        with open('test_configuration.json') as file_root:
-            file_json_data = json.load(file_root)
+    file_location = os.path.abspath("test_configuration.json").replace("tests_book_store\\","")
+    with open(file_location) as file_root:
+        file_json_data = json.load(file_root)
     return file_json_data
+
 
 
 def pytest_addoption(parser):
