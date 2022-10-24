@@ -1,7 +1,7 @@
 # Final - Project - QA & Automation Testing
 
 
-STD - https://github.com/DayanShay/Final_Project/blob/main/STD%20%E2%80%93%20BookStore%20%E2%80%93%20Final%20Project.pdf
+STD - https://github.com/DayanShay/Final_Project/blob/main/STD%20%E2%80%93%20BookStore%20%E2%80%93%20Final%20Project%20-%20Google%20Docs.pdf
 
 
 At this Project You can find.
